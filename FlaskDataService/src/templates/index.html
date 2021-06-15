@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Flask Data Service</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.js"></script>
+    <script type="text/javascript">
+    	$(document).ready(function(){
+ 			// sending a connect request to the server.
+ 			var socket = io();
+ 			socket.emit('subscribe', '{"topic": "test"}')
+ 			socket.on('mqtt_message', (msg) => {
+  				console.log('Topic: ' + msg['topic'] + ' ' + 'Time: ' + msg['time'] + ' ', JSON.parse(msg['payload']));
+			});
+		});
+		/*socket.on('mqtt_message', function(msg){
+   			console.log('After connect', msg);
+		});
+		const socket = io("ws://example.com/my-namespace", {
+  			reconnectionDelayMax: 10000,
+  			auth: {
+    			testor: "key"
+  			}
+		});*/
+	</script>
+</head>
+</html>
