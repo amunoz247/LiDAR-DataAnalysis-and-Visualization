@@ -29,7 +29,11 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "socket.io-client",
+              "three-orbitcontrols"
+            ]
           },
           "configurations": {
             "production": {
