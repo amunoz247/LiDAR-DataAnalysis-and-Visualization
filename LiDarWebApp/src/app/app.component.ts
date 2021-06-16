@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MqttSocketService } from './mqtt/mqttsocket.service';
+import { DataService } from './data.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ export class AppComponent {
   public pointCloud : PCD[] = [];
   parsedJSON: any;
 
-  constructor(private ms : MqttSocketService){}
+  constructor(private ds : DataService, private ms : MqttSocketService){}
 
   // Table Headers to be displayed on Webpage
   headers = ["time", "topic", "x", "y", "z", "intensity"]
@@ -36,6 +37,7 @@ export class AppComponent {
         }
         app.pointCloud.push({time: value.time, topic: value.topic, x: this.parsedJSON.x, 
           y: this.parsedJSON.y, z: this.parsedJSON.z, intensity: this.parsedJSON.intensity});
+        app.ds.Data = app.pointCloud[0];
     });
 
 
