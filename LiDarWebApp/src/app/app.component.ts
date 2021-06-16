@@ -38,6 +38,7 @@ export class AppComponent {
         app.pointCloud.push({time: value.time, topic: value.topic, x: this.parsedJSON.x, 
           y: this.parsedJSON.y, z: this.parsedJSON.z, intensity: this.parsedJSON.intensity});
         app.ds.Data = app.pointCloud[0];
+        console.log("MQTT DataService ", app.pointCloud)
     });
 
 

@@ -21,6 +21,7 @@
     "@angular/router": "~11.2.14",
     "ngx-socket-io": "^4.0.0",
     "rxjs": "~6.6.0",
+    "three": "^0.129.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
   },

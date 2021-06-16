@@ -5,10 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MqttSocketService } from './mqtt/mqttsocket.service';
+import { RendererComponent } from './renderer/renderer.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RendererComponent
   ],
   imports: [
     BrowserModule,
