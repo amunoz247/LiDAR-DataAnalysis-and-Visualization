@@ -2,6 +2,7 @@ import { AfterViewInit, Component,  Input, ViewChild, ElementRef, ContentChild, 
 import { DataService } from '../data.service';
 import { Color, WebGLRenderer, PerspectiveCamera, BoxGeometry, BufferGeometry, Float32BufferAttribute, Points,
   PointsMaterial, MeshBasicMaterial, Mesh, Scene } from 'three';
+import { OrbitControls } from '@avatsaev/three-orbitcontrols-ts';
 
 @Component
 ({
@@ -15,6 +16,7 @@ export class RendererComponent implements AfterViewInit {
   private pcamera: PerspectiveCamera;
   private pcdPoints: Points;
   public renderer: WebGLRenderer;
+  public controls: OrbitControls;
 
   @ViewChild( 'canvas' ) canvasReference: ElementRef;
   get canvas(): HTMLCanvasElement { return this.canvasReference.nativeElement; }
@@ -62,6 +64,12 @@ export class RendererComponent implements AfterViewInit {
     this.renderer.autoClear = true;
     //document.getElementById('demo').appendChild(this.renderer.domElement);
 
+    this.controls = new OrbitControls( this.pcamera, this.canvas );
+    this.controls.autoRotate = false;
+    this.controls.enableZoom = true;
+    this.controls.enablePan = true;
+    this.controls.update();
+
     this.pcamera.position.x = 0;
     this.pcamera.position.z = 30;
 
@@ -73,6 +81,7 @@ export class RendererComponent implements AfterViewInit {
         this.renderer.clear();
         requestAnimationFrame( animate );
         this.updateBuffer();
+        this.controls.update();
         this.render();
       };
       animate();
