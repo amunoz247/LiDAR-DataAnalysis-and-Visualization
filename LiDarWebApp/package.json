@@ -21,7 +21,9 @@
     "@angular/router": "~11.2.14",
     "@avatsaev/three-orbitcontrols-ts": "^0.1.5",
     "ngx-socket-io": "^4.0.0",
+    "pako": "^2.0.3",
     "rxjs": "~6.6.0",
+    "stats-js": "^1.0.1",
     "three": "^0.129.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
@@ -32,6 +34,8 @@
     "@angular/compiler-cli": "~11.2.14",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
+    "@types/pako": "1.0.1",
+    "@types/stats": "~0.16.30",
     "codelyzer": "^6.0.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",

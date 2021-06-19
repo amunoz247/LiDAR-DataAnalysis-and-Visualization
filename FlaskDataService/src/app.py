@@ -1,5 +1,6 @@
 import eventlet
 import json
+import gzip
 from flask import Flask, render_template
 from flask_cors import CORS
 from flask_mqtt import Mqtt
@@ -69,7 +70,7 @@ def handle_mqtt_message(client, userdata, message):
         payload=message.payload
     )
     values = read_pcd(message.payload)
-    data['payload'] = values['points']
+    data['payload'] = gzip.compress(bytes(values['points'], 'utf-8'))
     data['time'] = values['time']
     socketio.emit('mqtt_message', data=data) # can emit on topic name, can grab info from the topic
 

@@ -3,6 +3,7 @@ import { DataService } from '../data.service';
 import { Color, WebGLRenderer, PerspectiveCamera, BoxGeometry, BufferGeometry, Float32BufferAttribute, Points,
   PointsMaterial, MeshBasicMaterial, Mesh, Scene } from 'three';
 import { OrbitControls } from '@avatsaev/three-orbitcontrols-ts';
+import * as STATS from 'stats-js';
 
 @Component
 ({
@@ -32,6 +33,10 @@ export class RendererComponent implements AfterViewInit {
   ngAfterViewInit()
   {
 
+    var stats = new STATS();
+    stats.showPanel( 1 );
+    document.body.appendChild( stats.dom );
+
     var geometry = new BufferGeometry();
     var positions = new Array(80000 * 3);
     var colors = new Array(80000 * 3);
@@ -45,7 +50,7 @@ export class RendererComponent implements AfterViewInit {
     if ( colors.length > 0 ) geometry.addAttribute( 'color', new Float32BufferAttribute( colors, 3 ) );
 
     // geometry.setAttribute('position', new Float32BufferAttribute(vertices, 3));
-    var material = new PointsMaterial( { size: 1.0, color: 0x00afaf });
+    var material = new PointsMaterial( { size: 1.0, color: 0xffffff, vertexColors: true });
     this.pcdPoints = new Points( geometry, material );
     this.pcdScene.add( this.pcdPoints );
     this.pcdScene.background = new Color(0x000000);
@@ -80,9 +85,13 @@ export class RendererComponent implements AfterViewInit {
       {
         this.renderer.clear();
         requestAnimationFrame( animate );
+        stats.begin();
         this.updateBuffer();
+
         this.controls.update();
         this.render();
+                stats.end();
+
       };
       animate();
     } )
@@ -95,18 +104,20 @@ export class RendererComponent implements AfterViewInit {
     var intensity = this.ds.Data['intensity']; 
     console.log("vertx: ", this.ds.Data['x']);
     const positions = this.pcdPoints.geometry.attributes.position.array;
+    const colors = this.pcdPoints.geometry.attributes.color.array;
 
 
     for ( var i=0; i < vertX.length; i++ ){
       this.pcdPoints.geometry.attributes.position.setXYZ(i, vertX[i], vertY[i], vertZ[i]);
+      this.pcdPoints.geometry.attributes.color.setXYZ(i, 255, 0, 0);
       //vertices.push(vertX[i], vertY[i], vertZ[i]);
     }
 
     // for(var index = 0; index < vertices.length; index++) {
     //   positions[index] = vertices[index];
-    //   //this.pcdPoints.geometry.attributes.color.array[index] = color[index];
-    //   //if(isNaN(position[index]))
-    //   //console.log(position[index])
+    //   this.pcdPoints.geometry.attributes.color.array[index] = colors[index];
+    //   if(isNaN(positions[index]))
+    //   console.log(positions[index])
     // }
 
     // if(vertices.length < this.pcdPoints.geometry.drawRange.count && isFinite(this.pcdPoints.geometry.drawRange.count)) {
@@ -120,7 +131,7 @@ export class RendererComponent implements AfterViewInit {
     //console.log(position.length/3.0);
     //console.log(mesh.geometry);
     this.pcdPoints.geometry.attributes.position.needsUpdate = true;
-    //this.pcdPoints.geometry.attributes.color.needsUpdate = true;
+    this.pcdPoints.geometry.attributes.color.needsUpdate = true;
     this.pcdPoints.geometry.setDrawRange(0, vertX.length*3);
     this.pcdPoints.geometry.computeBoundingSphere();
     console.log(this.pcdPoints.geometry);

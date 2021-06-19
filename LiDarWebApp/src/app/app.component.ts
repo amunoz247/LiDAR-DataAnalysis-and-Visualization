@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MqttSocketService } from './mqtt/mqttsocket.service';
 import { DataService } from './data.service';
+import * as Pako from 'pako';
 
 @Component({
   selector: 'app-root',
@@ -29,8 +30,10 @@ export class AppComponent {
         //console.log(pcd);
         console.log(this);
         console.log(value.payload);
-        this.parsedJSON = JSON.parse(value.payload);
+        var uncompressedPayload = Pako.inflate(value.payload, { to: 'string' });
+        this.parsedJSON = JSON.parse(uncompressedPayload);
         console.log(this.parsedJSON);
+        console.log(value.payload.length);
         if (app.pointCloud.length > 10){
           var val = app.pointCloud.pop();
           console.log(val);
@@ -38,7 +41,6 @@ export class AppComponent {
         app.pointCloud.push({time: value.time, topic: value.topic, x: this.parsedJSON.x, 
           y: this.parsedJSON.y, z: this.parsedJSON.z, intensity: this.parsedJSON.intensity});
         app.ds.Data = app.pointCloud[0];
-        console.log("MQTT DataService ", app.pointCloud)
     });
 
 

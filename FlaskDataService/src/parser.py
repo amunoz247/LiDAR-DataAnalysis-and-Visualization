@@ -8,6 +8,7 @@ import json
 import numpy as np
 import pandas as pd
 
+
 numpy_pcd_type_mappings = [(np.dtype('float32'), ('F', 4)),
                            (np.dtype('float64'), ('F', 8)),
                            (np.dtype('uint8'), ('U', 1)),
@@ -237,7 +238,8 @@ def read_pcd(content, isfilename=False): # alter to return out objects at the co
     jsondict['y'] = list(df['y'])
     jsondict['z'] = list(df['z'])
     jsondict['intensity'] = list(df['intensity'])
-    data['points'] = json.dumps(jsondict)
+    data["points"] = json.dumps(json.loads(json.dumps(jsondict), parse_float=lambda x: round(float(x), 2)))
+    #data['points'] = json.dumps(jsondict)
     #generator = ( data['points'] for x in data )
 
 
