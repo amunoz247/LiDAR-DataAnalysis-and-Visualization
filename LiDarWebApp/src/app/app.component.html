@@ -1,7 +1,9 @@
 <!-- * * * * * * * Content below is the main web page! * * * * * * * * * * * * * * * * * -->
-<h1>LiDar Data Visualization Tool</h1>
 
-  <table id="data">
+<!-- header -->
+<app-header></app-header>
+
+      <table id="data">
         <tr>
             <th *ngFor="let column of headers">
                 {{column}}
@@ -29,12 +31,13 @@
             </td>
         </tr>
     
-  </table>
+      </table>
 
-  <three-renderer color='#000000'>
-      <!--<three-scene></three-scene>
-      <three-perspective-camera [fov]="60" [near]="1" [far]="1100" position=" 5, 5, -10 "></three-perspective-camera>-->
-  </three-renderer>
+      <!-- Render Three.js Scene -->
+      <!--<three-renderer color='#000000'></three-renderer>-->
+
+<!-- footer -->
+<app-footer></app-footer>
 
 
 <!-- * * * * * * * End of Code! * * * * * * * * * * * * * * * * * * * * * * * * -->
