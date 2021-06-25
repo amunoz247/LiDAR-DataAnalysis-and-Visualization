@@ -16,6 +16,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './ui_components/home/home.component';
+import { AboutComponent } from './ui_components/about/about.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { HomeComponent } from './ui_components/home/home.component';
     HeaderComponent,
     FooterComponent,
     RendererComponent,
-    HomeComponent
+    HomeComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
