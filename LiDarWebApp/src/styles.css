@@ -4,7 +4,7 @@
 
 * {
   font-family: 'Roboto', Arial, sans-serif;
-  /*color: #616161;*/
+  /*color: #616161; */
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -16,10 +16,10 @@ body { margin: 0;
 	   font-family: Roboto, "Helvetica Neue", sans-serif; 
 }
 
-.container {
+/*.container {
   display: flex;
   flex-direction: row;
-}
+}*/
 
 router-outlet + *  {
   padding: 0 16px;
@@ -73,7 +73,7 @@ label {
   text-transform: uppercase;
 }*/
 
-/* Button */
+/* Button 
 .button, button {
   display: inline-flex;
   align-items: center;
@@ -94,7 +94,7 @@ label {
 .button:disabled, button:disabled {
   opacity: 0.5;
   cursor: auto;
-}
+}*/
 
 /* Fancy Button 
 .fancy-button {
