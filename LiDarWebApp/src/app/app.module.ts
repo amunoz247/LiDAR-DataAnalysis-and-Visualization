@@ -18,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './ui_components/home/home.component';
 import { AboutComponent } from './ui_components/about/about.component';
 import { DashboardComponent } from './ui_components/dashboard/dashboard.component';
+import { SettingsComponent } from './ui_components/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { DashboardComponent } from './ui_components/dashboard/dashboard.componen
     RendererComponent,
     HomeComponent,
     AboutComponent,
-    DashboardComponent
+    DashboardComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
