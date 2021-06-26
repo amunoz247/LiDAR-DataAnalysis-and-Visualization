@@ -17,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './ui_components/home/home.component';
 import { AboutComponent } from './ui_components/about/about.component';
+import { DashboardComponent } from './ui_components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AboutComponent } from './ui_components/about/about.component';
     FooterComponent,
     RendererComponent,
     HomeComponent,
-    AboutComponent
+    AboutComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
