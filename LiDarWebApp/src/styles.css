@@ -128,6 +128,9 @@ app-header h1 {
 app-footer {
   position: absolute;
   bottom: 0;
-  align-items: center;
+  width:  99%;
+  opacity: .8;
+  background-color: #3f51b5;
+  color: white;
+  border-top: 1px solid #3f51b5;
 }
-
