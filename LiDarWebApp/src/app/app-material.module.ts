@@ -5,6 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from "@angular/material/menu";
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatRadioModule } from '@angular/material/radio';
 import { NgModule } from "@angular/core";
 
 @NgModule({
@@ -15,7 +17,9 @@ import { NgModule } from "@angular/core";
     MatIconModule,
     MatMenuModule,
     MatListModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule,
+    MatRadioModule
   ]
 })
 export class AppMaterialModule {}

@@ -4,18 +4,32 @@
 
       <h1 class="title is-bold">Settings</h1>
 
+      <!------Select Color for Point Cloud---------->
+      <h2 class="is-bold">Appearance</h2>
+      <label id="radio-group-label">Change Point Cloud Color</label>
+      <mat-radio-group
+        aria-labelledby="radio-group-label"
+        class="radio-group"
+        [(ngModel)]="selectedColor">
+        <mat-radio-button class="radio-button" *ngFor="let color of colors" [value]="color">
+          {{color}}
+        </mat-radio-button>
+      </mat-radio-group>
+      <div>Your selected color is: {{selectedColor}} </div>
+
+      <!------Select Theme Color of application---------->
       <h2 class="is-bold">Change Theme</h2>
         <mat-slide-toggle color="primary">
-          Slide me to get the primary theme!
+          Primary Theme
         </mat-slide-toggle> <br />
         <br />
         <mat-slide-toggle color="accent">
-          Slide me to get the accent theme!
+          Accent Theme
         </mat-slide-toggle>
         <br />
         <br />
         <mat-slide-toggle color="warn">
-          Slide me to get the warn theme!
+          Warn Theme
         </mat-slide-toggle>
 
     </div>

@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsComponent implements OnInit {
 
+  selectedColor: string;
+  colors: string[] = ['Red', 'Green', 'Blue'];
+
   constructor() { }
 
   ngOnInit(): void {
