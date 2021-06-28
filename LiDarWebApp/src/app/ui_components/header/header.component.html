@@ -1,22 +1,17 @@
-<!--<a [routerLink]="['/']">
-  <h1>LiDar Data Visualization Tool</h1>
-</a>-->
 
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" style="min-height: 70px !important; height: 70px !important;">
   <mat-toolbar-row>
     <a mat-button [routerLink]="['/']">
-	  <h1>LiDAR Data Visualization Tool</h1>
+	  <h1 id="text-outline">LiDAR Data Visualization Tool</h1>
 	</a>
     <span class="menu-spacer"></span>
     <div>
-      <a mat-button [routerLink]="'/'"> Home </a>
-      <a mat-button [routerLink]="'/data-form'"> Explorer </a>
-      <a mat-button [routerLink]="'/settings'"> Settings </a>
-      <a mat-button [routerLink]="'/about'"> About </a>
+      <a mat-button [routerLink]="'/'" id="text-outline" style="font-size: 20px"> Home </a>
+      <a mat-button [routerLink]="'/data-form'" id="text-outline" style="font-size: 20px"> Explorer </a>
+      <a mat-button [routerLink]="'/visualizations'" id="text-outline" style="font-size: 20px"> Dashboard </a>
+      <a mat-button [routerLink]="'/settings'" id="text-outline" style="font-size: 20px"> Settings </a>
+      <a mat-button [routerLink]="'/about'" id="text-outline" style="font-size: 20px"> About </a>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
 
-<!--<a routerLink="/cart" class="button fancy-button">
-  <i class="material-icons">shopping_cart</i>Checkout
-</a>-->

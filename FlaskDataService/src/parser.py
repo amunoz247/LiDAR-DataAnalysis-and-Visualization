@@ -3,6 +3,7 @@ import re
 import struct
 import warnings
 import datetime
+import bson
 import json
 
 import numpy as np
@@ -238,6 +239,7 @@ def read_pcd(content, isfilename=False): # alter to return out objects at the co
     jsondict['y'] = list(df['y'])
     jsondict['z'] = list(df['z'])
     jsondict['intensity'] = list(df['intensity'])
+    #data["points"] = bson.dumps(jsondict)
     data["points"] = json.dumps(json.loads(json.dumps(jsondict), parse_float=lambda x: round(float(x), 2)))
     #data['points'] = json.dumps(jsondict)
     #generator = ( data['points'] for x in data )

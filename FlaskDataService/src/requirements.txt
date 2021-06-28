@@ -4,5 +4,6 @@ Flask-Cors==3.0.10
 Flask-Mqtt==1.1.1
 Flask-Socketio==5.0.1
 Flask-Bootstrap==3.3.7.1
+bson
 numpy
 pandas

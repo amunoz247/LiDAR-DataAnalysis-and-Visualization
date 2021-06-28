@@ -11,19 +11,19 @@ import * as Pako from 'pako';
 
 export class AppComponent {
   title = 'LiDarWebApp';
-  public pointCloud : PCD[] = [];
-  parsedJSON: any;
+  //public pointCloud : PCD[] = [];
+  //parsedJSON: any;
 
   constructor(private ds : DataService, private ms : MqttSocketService){}
 
   // Table Headers to be displayed on Webpage
-  headers = ["time", "topic", "x", "y", "z", "intensity"]
+  //headers = ["time", "topic", "x", "y", "z", "intensity"]
 
 
   ngOnInit()
   {
     //Scope variable to access point cloud class array
-    var app = this;
+    /*var app = this;
 
     this.ms.on('mqtt_message', function(value){
         console.log(value);
@@ -43,7 +43,7 @@ export class AppComponent {
         app.ds.Data = app.pointCloud[0];
     });
 
-
+*/
   }
 }
 

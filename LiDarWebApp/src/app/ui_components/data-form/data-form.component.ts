@@ -21,7 +21,7 @@ export class DataFormComponent implements OnInit {
   vizList: any = ['Line Graph', 'Bar Chart', '3D Point Cloud Render']
   statList: any = ['Count', 'Acceleration']
   rangeList: any = ['1','2','3','4']
-  formatList: any = ['.pcd','.pcap']
+  formatList: any = ['.pcd','.pcap', '.gif']
 
   form = new FormGroup({
     topic: new FormControl('', [Validators.required, Validators.minLength(3)]),

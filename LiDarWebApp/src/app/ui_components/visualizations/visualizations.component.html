@@ -4,6 +4,38 @@
 
       <h1 class="title">Data Visualization Dashboard</h1>
 
+      <table id="data">
+        <tr>
+            <th *ngFor="let column of headers">
+                {{column}}
+            </th>
+        </tr>
+    
+        <tr *ngFor="let a of pointCloud">
+            <td >
+                {{a.time}}
+            </td>
+            <td >
+                {{a.topic}}
+            </td>
+            <td >
+                {{a.x}}
+            </td>
+            <td >
+                {{a.y}}
+            </td>
+            <td >
+                {{a.z}}
+            </td>
+            <td >
+                {{a.intensity}}
+            </td>
+        </tr>
+    
+      </table>
+
+      <three-renderer color='#000000'></three-renderer>
+
     </div>
     </div>
 </section>

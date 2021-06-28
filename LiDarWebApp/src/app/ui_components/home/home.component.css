@@ -1,6 +1,6 @@
  .hero {
       background-image: url('/assets/imgs/reno_bg_image.jpg') !important;
-      height: 900px;
+      height: 950px;
       background-position: center center;
       background-repeat: no-repeat;
       background-size: 100%;
@@ -17,12 +17,22 @@
 .container {
        text-align: center;
        color: white;
+       margin: 0;
      }
 
 .centered {
        position: absolute;
        top: 50%;
        left: 50%;
-       background: rgb(51, 153, 255, 0.3);
+       background: rgb(51, 153, 255, 0.5);
        transform: translate(-50%, -50%);
+       padding-top: 20px;
+       padding-bottom:  12.5px;
+       padding-left: 20px;
+       padding-right: 20px;
      }
+
+#text-outline{
+    -webkit-text-stroke-width: 0.5px;
+    -webkit-text-stroke-color: black;
+}
