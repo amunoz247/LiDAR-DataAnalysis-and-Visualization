@@ -14,8 +14,9 @@ import { AppMaterialModule } from "./app-material.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './ui_components/home/home.component';
 import { AboutComponent } from './ui_components/about/about.component';
-import { DashboardComponent } from './ui_components/dashboard/dashboard.component';
+import { DataFormComponent } from './ui_components/data-form/data-form.component';
 import { SettingsComponent } from './ui_components/settings/settings.component';
+import { VisualizationsComponent } from './ui_components/visualizations/visualizations.component';
 
 @NgModule({
   declarations: [
@@ -25,8 +26,9 @@ import { SettingsComponent } from './ui_components/settings/settings.component';
     RendererComponent,
     HomeComponent,
     AboutComponent,
-    DashboardComponent,
-    SettingsComponent
+    DataFormComponent,
+    SettingsComponent,
+    VisualizationsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './ui_components/home/home.component';
-import { DashboardComponent } from './ui_components/dashboard/dashboard.component';
+import { DataFormComponent } from './ui_components/data-form/data-form.component';
+import { VisualizationsComponent } from './ui_components/visualizations/visualizations.component';
 import { SettingsComponent } from './ui_components/settings/settings.component';
 import { AboutComponent } from './ui_components/about/about.component';
 
@@ -12,8 +13,12 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'dashboard',
-    component: DashboardComponent
+    path: 'data-form',
+    component: DataFormComponent
+  },
+  {
+    path: 'visualizations',
+    component: VisualizationsComponent
   },
   {
     path: 'settings',
