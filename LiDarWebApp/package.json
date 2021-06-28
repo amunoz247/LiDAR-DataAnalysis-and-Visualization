@@ -23,6 +23,7 @@
     "@angular/router": "~11.2.14",
     "@avatsaev/three-orbitcontrols-ts": "^0.1.5",
     "@fortawesome/fontawesome-free": "^5.15.3",
+    "@swimlane/ngx-charts": "^18.0.1",
     "mdb-angular-ui-kit": "^1.0.0-beta6",
     "ngx-socket-io": "^4.0.0",
     "pako": "^2.0.3",

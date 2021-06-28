@@ -2,9 +2,80 @@
     <div class="hero-body">
     <div class="container">
 
-      <h1 class="title">Data Explorer Form</h1>
+      <h1 class="title is-center">Data Explorer Form</h1>
 
-      <form (ngSubmit)="submit">
+      <form class="text-center border border-light p-5" [formGroup]="form" (ngSubmit)="submit()">
+      
+      <div class="form-group">
+          <label for="topic">Sensor Location</label>
+            <select formControlName="topic" class="form-control">
+                <option disabled>Select Location</option>
+                <option>Choose Location Topic</option>
+                <option *ngFor="let location of topicList">{{location}}</option>
+            </select>
+            <div *ngIf="f.topic.touched && f.topic.invalid" class="alert alert-danger">
+                <div *ngIf="f.topic.errors.required">Sensor Location is required.</div>
+            </div>
+        </div>
+     <pre></pre>
+      <div class="form-group">
+          <label for="time">Time (Measured in minutes since the top of the hour)</label>
+            <select formControlName="time" class="form-control">
+                <option disabled>Select Time</option>
+                <option>Choose Time</option>
+                <option *ngFor="let minute of timeSelect">{{minute}}</option>
+            </select>
+            <div *ngIf="f.time.touched && f.time.invalid" class="alert alert-danger">
+                <div *ngIf="f.time.errors.required">Time is required.</div>
+            </div>
+        </div>
+     <pre></pre>
+      <div class="form-group">
+            <label for="visualizationType">Select Visualization Type</label>
+             <select formControlName="visualizationType" class="form-control">
+                <option disabled>Select Visualization Type</option>
+                <option>Choose Type</option>
+                <option *ngFor="let viz of vizList">{{viz}}</option>
+            </select>
+            <div *ngIf="f.visualizationType.touched && f.visualizationType.invalid" class="alert alert-danger">
+                <div *ngIf="f.visualizationType.errors.required">Visualization Type is required.</div>
+            </div>
+        </div>
+      <pre></pre>
+      <div class="form-group">
+            <label for="stats">Select Data Statistics</label>
+            <select formControlName="stats" class="form-control">
+                <option disabled>Select Data Statistics</option>
+                <option>Choose Statistical Value</option>
+                <option *ngFor="let stat of statList">{{stat}}</option>
+            </select>
+            <div *ngIf="f.stats.touched && f.stats.invalid" class="alert alert-danger">
+                <div *ngIf="f.stats.errors.required">Data Type is required.</div>
+            </div>
+        </div>
+      <pre></pre>
+      <div class="form-group">
+            <label for="range">Select Range of View</label>
+              <select formControlName="range" class="form-control">
+                <option disabled>Select Range of View</option>
+                <option>Choose Range</option>
+                <option *ngFor="let range of rangeList">{{range}}</option>
+            </select>
+        </div>
+      <pre></pre>
+      <div class="form-group">
+            <label for="dataFormat">Select Data Format</label>
+              <select formControlName="dataFormat" class="form-control">
+                <option disabled>Select Data Format</option>
+                <option>Choose Format</option>
+                <option *ngFor="let format of formatList">{{format}}</option>
+            </select>
+        </div>
+      <pre></pre>
+        <button mat-raised-button class="btn btn-primary" color="primary" type="submit">Submit</button>
+    </form>
+
+      <!--<form (ngSubmit)="submit">
         <div class="form-group">
           <label for="firstname">First Name</label><br>
           <input type="text" name ="firstname" class="form-control" ngModel>
@@ -26,7 +97,7 @@
         </div>
       </form>
       <pre></pre>
-      <button mat-raised-button color="primary" type="submit">Submit</button>
+      <button mat-raised-button color="primary" type="submit">Submit</button>-->
 
     </div>
     </div>
