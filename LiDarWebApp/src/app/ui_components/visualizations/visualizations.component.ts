@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MqttSocketService } from '@app/mqtt/mqttsocket.service';
 import { DataService } from '@app/data.service';
+import { PCD } from '@app/app.component';
 import * as BSON from 'bson';
 import * as Pako from 'pako';
 
@@ -48,17 +49,4 @@ export class VisualizationsComponent implements OnInit {
 
 
   }
-}
-
-// Point Cloud class to handle data from MQTT messages
-export class PCD{
-  time:string;
-  topic:string;
-
-  //Payload point cloud values
-  x:[];
-  y:[];
-  z:[];
-  intensity:[];
-
 }
