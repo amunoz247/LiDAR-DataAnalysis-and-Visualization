@@ -1,9 +1,11 @@
+/* Button Group for Data Appearance */
 .radio-group {
   display: flex;
   flex-direction: column;
   margin: 15px 0;
 }
 
+/* Button Margin */
 .radio-button {
   margin: 5px;
 }
