@@ -9,3 +9,16 @@
 .radio-button {
   margin: 5px;
 }
+
+h2 {
+  font-size:  1.5em;
+  border-bottom: 1px solid #aaaaaa;
+}
+
+mat-radio-group, mat-slide-toggle {
+  padding: 20px;
+}
+
+.container {
+    padding: 40px;
+}
