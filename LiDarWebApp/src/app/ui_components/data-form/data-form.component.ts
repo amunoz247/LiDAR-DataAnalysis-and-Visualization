@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MqttSocketService } from '@app/mqtt/mqttsocket.service';
 import { DataService } from '@app/data.service';
 import * as Pako from 'pako';
@@ -11,7 +12,7 @@ import * as Pako from 'pako';
 })
 export class DataFormComponent implements OnInit {
 
-  constructor(private ds : DataService, private ms : MqttSocketService) { }
+  constructor(private ds : DataService, private ms : MqttSocketService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -23,7 +24,7 @@ export class DataFormComponent implements OnInit {
   rangeList: any = ['1','2','3','4']
   formatList: any = ['.pcd','.pcap', '.gif']
 
-  form = new FormGroup({
+  explorerForm = new FormGroup({
     topic: new FormControl('', [Validators.required, Validators.minLength(3)]),
     time: new FormControl('', [Validators.required, Validators.minLength(1)]),
     visualizationType: new FormControl('', Validators.required),
@@ -34,11 +35,13 @@ export class DataFormComponent implements OnInit {
   
 
   get f(){
-    return this.form.controls;
+    return this.explorerForm.controls;
   }
   
   submit(){
-    console.log(this.form.value);
+    console.log("Data Explorer Form Submitted")
+    console.log(this.explorerForm.value);
+    this.router.navigateByUrl('/visualizations');
   }
 
 

@@ -24,7 +24,6 @@
        position: absolute;
        top: 50%;
        left: 50%;
-
        transform: translate(-50%, -50%);
        padding-top: 20px;
        padding-bottom:  12.5px;
@@ -33,11 +32,11 @@
      }
 
 #rcorners {
-  background: rgb(51, 153, 255, 0.7);
-  border-radius: 15px;
-}
+       background: rgb(51, 153, 255, 0.7);
+       border-radius: 15px;
+     }
 
 #text-outline{
-    -webkit-text-stroke-width: 0.5px;
-    -webkit-text-stroke-color: black;
-}
+       -webkit-text-stroke-width: 0.5px;
+       -webkit-text-stroke-color: black;
+     }

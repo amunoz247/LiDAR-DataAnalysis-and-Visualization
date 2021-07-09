@@ -10,10 +10,16 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/*html, body { height: 100%; }*/
+html, body { height: 100%; }
 
 body { margin: 0; 
 	   font-family: Roboto, "Helvetica Neue", sans-serif; 
+     display: flex;
+     flex-direction: column;
+}
+
+.content {
+  flex: 1 0 auto;
 }
 
 /*.container {
@@ -128,6 +134,10 @@ app-header h1 {
   background: #3f51b5;
   color: white;
   font-size: 50px;
+}
+
+.footer {
+  flex-grow: 1;
 }
 
 /* Footer */
