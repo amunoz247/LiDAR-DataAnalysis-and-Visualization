@@ -24,6 +24,7 @@
     "@avatsaev/three-orbitcontrols-ts": "^0.1.5",
     "@fortawesome/fontawesome-free": "^5.15.3",
     "@swimlane/ngx-charts": "^18.0.1",
+    "bootstrap": "^5.0.2",
     "bson": "4.4.0",
     "mdb-angular-ui-kit": "^1.0.0-beta6",
     "ngx-socket-io": "^4.0.0",

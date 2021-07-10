@@ -1,6 +1,6 @@
 .centered {
      position: absolute;
-     top: 65%;
+     top: 80%;
      left: 50%;
      transform: translate(-50%, -50%);
      padding-top: 20px;
@@ -16,6 +16,10 @@ label {
 
 mat-form-field {
   width:  100%;
+}
+
+mat-label {
+  position: relative;
 }
 
 select {

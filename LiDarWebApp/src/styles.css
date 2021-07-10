@@ -1,10 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.min.css";
 
 /* Global Styles */
 
-* {
+/** {
   font-family: 'Roboto', Arial, sans-serif;
-  /*color: #616161; */
+  color: #616161; 
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -22,7 +23,7 @@ body { margin: 0;
   flex: 1 0 auto;
 }
 
-/*.container {
+.container {
   display: flex;
   flex-direction: row;
 }*/

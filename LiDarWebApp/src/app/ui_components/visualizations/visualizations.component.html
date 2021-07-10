@@ -5,9 +5,40 @@
         <h1>Data Visualization Dashboard</h1>
       </div>
 
-      <div class="container">
+     <div class="container">
 
-      <table id="data">
+      <div style="text-align:center">
+          <h2 class="text-secondary" style="padding: 10px">
+            Charts and Graphs
+          </h2>
+          <div class="row ml-5">
+            <div class="col">
+                <div class="row">
+                  <h3 style="text-align:left; padding-left: 250px">
+                    Vertical Bar Chart
+                  </h3>
+                </div>
+                <div class="row">
+                      <ngx-charts-bar-vertical
+                      [view]="[600,400]"
+                      [scheme]="colorScheme"
+                      [results]="barData"
+                      [gradient]="gradient"
+                      [xAxis]="showXAxis"
+                      [yAxis]="showYAxis"
+                      [legend]="showLegend"
+                      [showXAxisLabel]="showXAxisLabel"
+                      [showYAxisLabel]="showYAxisLabel"
+                      [xAxisLabel]="xAxisLabel"
+                      [yAxisLabel]="yAxisLabel"
+                      (select)="onSelect($event)">
+                      </ngx-charts-bar-vertical>
+                </div>
+              </div>
+            </div>
+        </div>
+
+      <!--<table id="data">
         <tr>
             <th *ngFor="let column of headers">
                 {{column}}
@@ -35,7 +66,7 @@
             </td>
         </tr>
     
-      </table>
+      </table>-->
 
       <three-renderer color='#000000'></three-renderer>
 

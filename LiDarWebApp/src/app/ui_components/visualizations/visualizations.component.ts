@@ -17,6 +17,50 @@ export class VisualizationsComponent implements OnInit {
 
   constructor(private ds : DataService, private ms : MqttSocketService){}
 
+  pageName = 'Data Visualization Dashboard';
+
+  // options for the chart
+  showXAxis = true;
+  showYAxis = true;
+  gradient = false;
+  showLegend = true;
+  showXAxisLabel = true;
+  xAxisLabel = 'Country';
+  showYAxisLabel = true;
+  yAxisLabel = 'Sales';
+  timeline = true;
+
+  colorScheme = {
+    domain: ['#9370DB', '#87CEFA', '#FA8072', '#FF7F50', '#90EE90', '#9370DB']
+  };
+
+  public barData = [
+    {
+      "name": "China",
+      "value": 2243772
+    },
+    {
+      "name": "USA",
+      "value": 1126000
+    },
+    {
+      "name": "Norway",
+      "value": 296215
+    },
+    {
+      "name": "Japan",
+      "value": 257363
+    },
+    {
+      "name": "Germany",
+      "value": 196750
+    },
+    {
+      "name": "France",
+      "value": 204617
+    }
+  ];
+
   // Table Headers to be displayed on Webpage
   headers = ["time", "topic", "x", "y", "z", "intensity"]
 
@@ -46,7 +90,9 @@ export class VisualizationsComponent implements OnInit {
           y: this.parsedJSON.y, z: this.parsedJSON.z, intensity: this.parsedJSON.intensity});
         app.ds.Data = app.pointCloud[0];
     });
+  }
 
-
+  onSelect(event) {
+    console.log(event);
   }
 }

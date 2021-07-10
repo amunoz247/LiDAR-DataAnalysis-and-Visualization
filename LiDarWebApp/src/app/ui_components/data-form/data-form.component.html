@@ -9,13 +9,13 @@
               <div class="content">
       <div class="centered" id="rcorners">
 
-      <form class="text-center border border-light p-5" [formGroup]="explorerForm" (ngSubmit)="submit()">
-        <h1>Data Explorer Form</h1>
+      <form class="border border-light p-5" [formGroup]="explorerForm" (ngSubmit)="submit()">
+        <h1 class="text-center">Data Explorer Form</h1>
 
       <!-- #1 Select Sensor Location -->
-      <h4>Sensor Location</h4>
+      <p>Sensor Location:</p>
       <div class="form-group">
-        <mat-form-field appearance="fill">
+        <mat-form-field postion="relative">
           <mat-label for="topic">Select Sensor Location</mat-label>
           <mat-select formControlName="topic" class="form-control">
             <mat-option *ngFor="let location of topicList" [value]="location">
@@ -31,7 +31,7 @@
       <!-- #2 Select Time in Minutes -->
       <h4>Time (Measured in minutes since the top of the hour)</h4>
       <div class="form-group">
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="standard">
           <mat-label for="time">Select Time</mat-label>
           <mat-select formControlName="time" class="form-control">
             <mat-option *ngFor="let minute of timeSelect" [value]="minute">
@@ -44,7 +44,7 @@
         </mat-form-field>
       </div>
       <pre></pre>
-      <!-- Select Visualization Type -->
+      <!-- #3 Select Visualization Type -->
       <h4>Visualization Type</h4>
       <div class="form-group">
         <mat-form-field appearance="fill">
@@ -60,7 +60,7 @@
         </mat-form-field>
       </div>
       <pre></pre>
-      <!-- Select Data Statistical Analysis -->
+      <!-- #4 Select Data Statistical Analysis -->
       <h4>Data Statistics</h4>
       <div class="form-group">
         <mat-form-field appearance="fill">
@@ -76,7 +76,7 @@
         </mat-form-field>
       </div>
       <pre></pre>
-      <!-- Select Range of View -->
+      <!-- #5 Select Range of View -->
       <h4>Range of View</h4>
       <div class="form-group">
         <mat-form-field appearance="fill">
@@ -89,7 +89,7 @@
         </mat-form-field>
       </div>
       <pre></pre>
-      <!-- Select Data File Format -->
+      <!-- #6 Select Data File Format -->
       <h4>Data File Format</h4>
       <div class="form-group">
         <mat-form-field appearance="fill">
