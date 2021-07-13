@@ -25,39 +25,23 @@ export class VisualizationsComponent implements OnInit {
   gradient = false;
   showLegend = true;
   showXAxisLabel = true;
-  xAxisLabel = 'Country';
+  xAxisLabel = 'Object';
   showYAxisLabel = true;
-  yAxisLabel = 'Sales';
+  yAxisLabel = 'Count';
   timeline = true;
 
-  colorScheme = {
+  public colorScheme = {
     domain: ['#9370DB', '#87CEFA', '#FA8072', '#FF7F50', '#90EE90', '#9370DB']
   };
 
   public barData = [
     {
-      "name": "China",
-      "value": 2243772
+      "name": "Vehicles",
+      "value": 235
     },
     {
-      "name": "USA",
-      "value": 1126000
-    },
-    {
-      "name": "Norway",
-      "value": 296215
-    },
-    {
-      "name": "Japan",
-      "value": 257363
-    },
-    {
-      "name": "Germany",
-      "value": 196750
-    },
-    {
-      "name": "France",
-      "value": 204617
+      "name": "Pedestrians",
+      "value": 77
     }
   ];
 
@@ -80,12 +64,13 @@ export class VisualizationsComponent implements OnInit {
 
         //var uncompressedPayload = Pako.inflate(value.payload);
         //this.parsedJSON = BSON.deserialize(value.payload);
-        console.log(this.parsedJSON);
+        console.log(this.parsedJSON.y.length);
         console.log(value.payload.length);
-        if (app.pointCloud.length > 10){
-          var val = app.pointCloud.pop();
+        if (app.pointCloud.length > 2){
+          var val = app.pointCloud.shift();
           console.log(val);
         }
+        console.log(app.pointCloud.length);
         app.pointCloud.push({time: value.time, topic: value.topic, x: this.parsedJSON.x, 
           y: this.parsedJSON.y, z: this.parsedJSON.z, intensity: this.parsedJSON.intensity});
         app.ds.Data = app.pointCloud[0];

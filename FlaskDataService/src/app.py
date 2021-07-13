@@ -1,7 +1,7 @@
 import eventlet
 import json
 import gzip
-from flask import Flask, render_template
+from flask import Flask, render_template, Response
 from flask_cors import CORS
 from flask_mqtt import Mqtt
 from flask_socketio import SocketIO
@@ -38,6 +38,12 @@ bootstrap = Bootstrap(app)
 def index():
 #    return "Hello world!"
     return render_template('index.html')
+
+@app.route('/topics')
+def findTopics():
+    #topicsAvailable = str(topicsAvailable)
+    return Response(json.dumps(topicsAvailable), mimetype='text/json')
+    #return 'Hello'
 
 
 #@socketio.on('publish')
@@ -82,5 +88,8 @@ def handle_logging(client, userdata, level, buf):
 
 
 if __name__ == '__main__':
+    topicFile = open('./topic.txt', 'r')
+    topicsAvailable = topicFile.read().split('\n')
+    topicFile.close()
     # Keep reloader set to false otherwise this will create two Flask instances.
     socketio.run(app, host='0.0.0.0', port=5000, use_reloader=False, debug=False)

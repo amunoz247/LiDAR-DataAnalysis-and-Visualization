@@ -13,10 +13,9 @@
         <h1 class="text-center">Data Explorer Form</h1>
 
       <!-- #1 Select Sensor Location -->
-      <p>Sensor Location:</p>
       <div class="form-group">
-        <mat-form-field postion="relative">
-          <mat-label for="topic">Select Sensor Location</mat-label>
+        <mat-label>Select Sensor Location</mat-label>
+        <mat-form-field>
           <mat-select formControlName="topic" class="form-control">
             <mat-option *ngFor="let location of topicList" [value]="location">
               {{location}}

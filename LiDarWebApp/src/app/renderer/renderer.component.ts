@@ -86,7 +86,13 @@ export class RendererComponent implements AfterViewInit {
         this.renderer.clear();
         requestAnimationFrame( animate );
         stats.begin();
-        this.updateBuffer();
+
+        console.log(this.ds.Data.topic + ' ' + this.ds.selectedTopic);
+        if(this.ds.Data.topic == this.ds.selectedTopic){
+
+          console.log(this.ds.Data.topic);
+          this.updateBuffer();
+        }
 
         this.controls.update();
         this.render();
@@ -102,7 +108,7 @@ export class RendererComponent implements AfterViewInit {
     var vertY = this.ds.Data['y'];
     var vertZ = this.ds.Data['z'];
     var intensity = this.ds.Data['intensity']; 
-    console.log("vertx: ", this.ds.Data['x']);
+    //console.log("vertx: ", this.ds.Data['x']);
     const positions = this.pcdPoints.geometry.attributes.position.array;
     const colors = this.pcdPoints.geometry.attributes.color.array;
 
@@ -134,7 +140,8 @@ export class RendererComponent implements AfterViewInit {
     this.pcdPoints.geometry.attributes.color.needsUpdate = true;
     this.pcdPoints.geometry.setDrawRange(0, vertX.length*3);
     this.pcdPoints.geometry.computeBoundingSphere();
-    console.log(this.pcdPoints.geometry);
+    //console.log(this.pcdPoints.geometry);
+    console.log(this.ds.Data['x'].length);
   }
   render() { console.log('Hello Im working'); this.renderer.render( this.pcdScene, this.pcamera ); }
 }
