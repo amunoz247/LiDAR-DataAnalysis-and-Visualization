@@ -33,7 +33,8 @@
     "stats-js": "^1.0.1",
     "three": "^0.129.0",
     "tslib": "^2.0.0",
-    "zone.js": "~0.11.3"
+    "zone.js": "~0.11.3",
+    "fzstd": "~0.0.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1102.13",

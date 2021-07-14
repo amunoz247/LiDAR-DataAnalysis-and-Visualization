@@ -4,6 +4,7 @@ import { DataService } from '@app/data.service';
 import { PCD } from '@app/app.component';
 import * as BSON from 'bson';
 import * as Pako from 'pako';
+import * as fzstd from 'fzstd';
 
 @Component({
   selector: 'app-visualizations',
@@ -59,8 +60,13 @@ export class VisualizationsComponent implements OnInit {
         //console.log(pcd);
         console.log(this);
         console.log(value.payload);
-        var uncompressedPayload = Pako.inflate(value.payload, { to: 'string' });
-        this.parsedJSON = JSON.parse(uncompressedPayload);
+        // var uncompressedPayload = Pako.inflate(value.payload, { to: 'string' });
+        const compressed = new Uint8Array(value.payload);
+        const uncompressedPayload = fzstd.decompress(compressed);
+        console.log(uncompressedPayload);
+        var string = new TextDecoder().decode(uncompressedPayload);
+        console.log(string);
+        this.parsedJSON = JSON.parse(string);
 
         //var uncompressedPayload = Pako.inflate(value.payload);
         //this.parsedJSON = BSON.deserialize(value.payload);
