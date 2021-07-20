@@ -21,19 +21,19 @@ export class DataFormComponent implements OnInit {
 
   // Default Values if no data is coming through from backend
   topicList: any = ['test15thVirginiaSE','test15thVirginiaNW', 'test']
+  statList: any = ['Count', 'Acceleration', 'All']
   timeSelect: any = ['1','2','3','4']
   vizList: any = ['Line Graph', 'Bar Chart', '3D Point Cloud Render']
-  statList: any = ['Count', 'Acceleration']
-  rangeList: any = ['1','2','3','4']
   formatList: any = ['.pcd','.pcap', '.gif']
+  rangeList: any = ['1','2','3','4']
 
   explorerForm = new FormGroup({
     topic: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    stats: new FormControl('', Validators.required),
     time: new FormControl('', [Validators.required, Validators.minLength(1)]),
     visualizationType: new FormControl('', Validators.required),
-    stats: new FormControl('', Validators.required),
-    range: new FormControl('', Validators.required),
     dataFormat: new FormControl('', Validators.required),
+    range: new FormControl('', Validators.required)
   });
   
 

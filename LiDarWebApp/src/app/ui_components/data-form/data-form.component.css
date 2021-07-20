@@ -1,13 +1,17 @@
 .centered {
-     position: absolute;
-     top: 80%;
-     left: 50%;
-     transform: translate(-50%, -50%);
-     padding-top: 20px;
-     padding-bottom: 20px;
-     padding-left: 25px;
-     padding-right: 25px;
-   }
+   position: absolute;
+   top: 70%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   padding-top: 20px;
+   padding-bottom: 20px;
+   padding-left: 25px;
+   padding-right: 25px;
+}
+
+.mat-form-field-label {
+  color: rgba(0,0,0,.6);
+}
 
 label {
   display:flex;
@@ -15,7 +19,7 @@ label {
 }
 
 mat-form-field {
-  width:  100%;
+  width: 100%;
 }
 
 mat-label {
