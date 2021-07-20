@@ -8,35 +8,64 @@
      <div class="container">
 
       <div style="text-align:center">
-          <h2 class="text-secondary" style="padding: 10px">
+          <h2 class="text-secondary" style="padding: 20px">
             Charts and Graphs
           </h2>
           <div class="row ml-5">
             <div class="col">
                 <div class="row">
-                  <h3 style="text-align:left; padding-left: 250px">
+                  <h3 class="alignleft" style="padding-left: 250px">
                     Vertical Bar Chart
                   </h3>
+                  <h3 class="alignright" style="padding-right: 250px">
+                    Multi Line Graph
+                  </h3>
                 </div>
-                <div class="row">
-                      <ngx-charts-bar-vertical
-                      [view]="[600,400]"
-                      [scheme]="colorScheme"
-                      [results]="barData"
-                      [gradient]="gradient"
-                      [xAxis]="showXAxis"
-                      [yAxis]="showYAxis"
-                      [legend]="showLegend"
-                      [showXAxisLabel]="showXAxisLabel"
-                      [showYAxisLabel]="showYAxisLabel"
-                      [xAxisLabel]="xAxisLabel"
-                      [yAxisLabel]="yAxisLabel"
-                      (select)="onSelect($event)">
-                      </ngx-charts-bar-vertical>
+                <div class="align-chart-left">
+                    <ngx-charts-bar-vertical
+                    [view]="[600,400]"
+                    [scheme]="barColorScheme"
+                    [results]="barData"
+                    [gradient]="gradient"
+                    [xAxis]="showXAxis"
+                    [yAxis]="showYAxis"
+                    [legend]="showLegend"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [xAxisLabel]="xAxisBar"
+                    [yAxisLabel]="yAxisBar"
+                    (select)="onSelect($event)">
+                    </ngx-charts-bar-vertical>
+                </div>
+                <div class="align-chart-right">
+                    <ngx-charts-line-chart
+                    [view]="[700,400]"
+                    [scheme]="lineColorScheme"
+                    [results]="multiLineData"
+                    [gradient]="gradient"
+                    [xAxis]="showXAxis"
+                    [yAxis]="showYAxis"
+                    [legend]="showLegend"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [xAxisLabel]="xAxisLine"
+                    [yAxisLabel]="yAxisLine">
+                    </ngx-charts-line-chart>
                 </div>
               </div>
             </div>
-        </div>
+
+            <div style="text-align:center">
+                <h3 style="padding: 30px">
+                    Near Real Time 3D Mesh Render
+                </h3>
+                <three-renderer color='#000000' width="100%"></three-renderer>
+            </div>
+
+      </div>
+     </div>
+    </div>
+</section>
 
       <!--<table id="data">
         <tr>
@@ -67,9 +96,3 @@
         </tr>
     
       </table>-->
-
-      <three-renderer color='#000000'></three-renderer>
-
-    </div>
-    </div>
-</section>

@@ -26,13 +26,21 @@ export class VisualizationsComponent implements OnInit {
   gradient = false;
   showLegend = true;
   showXAxisLabel = true;
-  xAxisLabel = 'Object';
   showYAxisLabel = true;
-  yAxisLabel = 'Count';
+  xAxisBar = 'Object';
+  yAxisBar = 'Count';
   timeline = true;
 
-  public colorScheme = {
-    domain: ['#9370DB', '#87CEFA', '#FA8072', '#FF7F50', '#90EE90', '#9370DB']
+  // axis labels for line chart
+  xAxisLine = 'Minutes';
+  yAxisLine = 'Count';
+
+  public barColorScheme = {
+    domain: ['#9370DB', '#87CEFA', '#90EE90', '#9370DB', '#FA8072', '#FF7F50']
+  };
+
+  public lineColorScheme = {
+    domain: ['#FA8072', '#90EE90', '#FF7F50', '#9370DB', '#9370DB', '#87CEFA']
   };
 
   public barData = [
@@ -43,6 +51,51 @@ export class VisualizationsComponent implements OnInit {
     {
       "name": "Pedestrians",
       "value": 77
+    }
+  ];
+
+  public multiLineData = [
+    {
+      "name": "Vehicles",
+      "series": [
+        {
+          "name": "1",
+          "value": "8"
+        },
+        {
+          "name": "2",
+          "value": "15"
+        },
+        {
+          "name": "3",
+          "value": "7"
+        },
+        {
+          "name": "4",
+          "value": "8"
+        }
+      ],
+    },
+    {
+      "name": "Pedestrians",
+      "series": [
+        {
+          "name": "1",
+          "value": "12"
+        },
+        {
+          "name": "2",
+          "value": "14"
+        },
+        {
+          "name": "3",
+          "value": "11"
+        },
+        {
+          "name": "4",
+          "value": "9"
+        }
+      ],
     }
   ];
 
