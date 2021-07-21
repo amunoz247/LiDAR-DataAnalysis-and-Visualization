@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
 import { MqttSocketService } from './mqtt/mqttsocket.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -36,6 +37,7 @@ import { VisualizationsComponent } from './ui_components/visualizations/visualiz
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FlexLayoutModule,
     MdbCheckboxModule,
     FormsModule, 
     ReactiveFormsModule,

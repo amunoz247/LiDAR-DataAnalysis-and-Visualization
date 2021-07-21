@@ -5,8 +5,54 @@
         <h1>Data Visualization Dashboard</h1>
       </div>
 
-     <div class="container" id="page-container">
+      <div style="text-align:center" id="page-container">
+          <h2 class="text-secondary" style="padding: 20px">
+            Charts and Graphs
+          </h2>
 
+    <div #flexLayoutContainer style="padding-left: 150px; padding-right: 150px">
+
+        <div fxLayout="row" fxLayout.lt-sm="column" fxFlexAlign="baseline" [fxLayoutGap]="layoutGap">
+            <mat-card fxFlex="1 1 50%" class="aligncenter">
+              <h3>Vertical Bar Chart</h3>
+              <div class="align-chart-left">
+                <ngx-charts-bar-vertical
+                [view]="[600,400]"
+                [scheme]="barColorScheme"
+                [results]="barData"
+                [gradient]="gradient"
+                [xAxis]="showXAxis"
+                [yAxis]="showYAxis"
+                [legend]="showLegend"
+                [showXAxisLabel]="showXAxisLabel"
+                [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="xAxisBar"
+                [yAxisLabel]="yAxisBar"
+                (select)="onSelect($event)">
+                </ngx-charts-bar-vertical>
+              </div>
+            </mat-card>
+            
+            <mat-card fxFlex="1 1 50%" class="aligncenter">
+              <h3>Multi Line Graph</h3>
+              <div class="align-chart-right">
+                <ngx-charts-line-chart
+                [view]="[700,400]"
+                [scheme]="lineColorScheme"
+                [results]="multiLineData"
+                [gradient]="gradient"
+                [xAxis]="showXAxis"
+                [yAxis]="showYAxis"
+                [legend]="showLegend"
+                [showXAxisLabel]="showXAxisLabel"
+                [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="xAxisLine"
+                [yAxisLabel]="yAxisLine">
+                </ngx-charts-line-chart>
+              </div>
+            </mat-card>
+        </div>
+     <!--<div class="container" id="page-container">
       <div style="text-align:center">
           <h2 class="text-secondary" style="padding: 20px">
             Charts and Graphs
@@ -53,8 +99,8 @@
                     </ngx-charts-line-chart>
                 </div>
               </div>
-            </div>
-
+            </div>-->
+</div>
             <div style="text-align:center">
                 <h3 style="padding: 30px">
                     Near Real Time 3D Mesh Render
@@ -62,7 +108,7 @@
                 <three-renderer color='#000000' width="100%"></three-renderer>
             </div>
 
-      </div>
+      <!--</div>-->
      </div>
     </div>
 </section>

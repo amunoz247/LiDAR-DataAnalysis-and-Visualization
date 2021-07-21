@@ -18,6 +18,12 @@
   text-align:left;
 }
 
+.aligncenter {
+  float: left;
+  width:50%;
+  text-align:center;
+}
+
 .alignright {
   float: left;
   width:50%;

@@ -35,6 +35,8 @@ export class VisualizationsComponent implements OnInit {
   xAxisLine = 'Minutes';
   yAxisLine = 'Count';
 
+  public layoutGap: string = '40px';
+
   public barColorScheme = {
     domain: ['#9370DB', '#87CEFA', '#90EE90', '#9370DB', '#FA8072', '#FF7F50']
   };
