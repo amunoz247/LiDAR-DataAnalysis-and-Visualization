@@ -5,6 +5,12 @@
   align-items:left;
 }
 
+.align-chart-center {
+  float: left;
+  width:100%;
+  align-items:center;
+}
+
 .align-chart-right {
  float: left;
  width:50%;

@@ -57,7 +57,7 @@ export class RendererComponent implements AfterViewInit {
 
     //this.pcamera = new PerspectiveCamera(50, 4 / 3, .5, 1000); // camera
     this.pcamera.updateProjectionMatrix();
-    this.pcamera.position.set(50, 50, 50);
+    this.pcamera.position.set(0, -25, 0);
     //this.pcamera.lookAt(0, 0, 0);
     this.pcamera.lookAt( this.pcdScene.position );
 
@@ -115,7 +115,9 @@ export class RendererComponent implements AfterViewInit {
 
     for ( var i=0; i < vertX.length; i++ ){
       this.pcdPoints.geometry.attributes.position.setXYZ(i, vertX[i], vertY[i], vertZ[i]);
-      this.pcdPoints.geometry.attributes.color.setXYZ(i, 255, 0, 0);
+      this.pcdPoints.geometry.attributes.color.setXYZ(i, 255, 0, 0); // Red Point Clouds
+      // this.pcdPoints.geometry.attributes.color.setXYZ(i, 0, 255, 0); // Green Point Clouds
+      // this.pcdPoints.geometry.attributes.color.setXYZ(i, 0, 0, 255); // Blue Point Clouds
       //vertices.push(vertX[i], vertY[i], vertZ[i]);
     }
 

@@ -14,7 +14,7 @@
 
         <div fxLayout="row" fxLayout.lt-sm="column" fxFlexAlign="baseline" [fxLayoutGap]="layoutGap">
             <mat-card fxFlex="1 1 50%" class="aligncenter">
-              <h3>Vertical Bar Chart</h3>
+              <h3><b>Vertical Bar Chart</b></h3>
               <div class="align-chart-left">
                 <ngx-charts-bar-vertical
                 [view]="[600,400]"
@@ -34,7 +34,7 @@
             </mat-card>
             
             <mat-card fxFlex="1 1 50%" class="aligncenter">
-              <h3>Multi Line Graph</h3>
+              <h3><b>Multi Line Graph</b></h3>
               <div class="align-chart-right">
                 <ngx-charts-line-chart
                 [view]="[700,400]"
@@ -52,6 +52,15 @@
               </div>
             </mat-card>
         </div>
+
+        <div fxLayout="column" [fxLayoutGap]="layoutGap" style="padding-top: 30px; padding-bottom: 30px;">
+        <mat-card fxFlex="1 1 50%" style="position:relative">
+          <h3><b>Near Real Time 3D Mesh Render</b></h3>
+          <div class="align-chart-center">
+                <three-renderer color='#000000' width="100%"></three-renderer>
+          </div>
+        </mat-card>
+    </div>
      <!--<div class="container" id="page-container">
       <div style="text-align:center">
           <h2 class="text-secondary" style="padding: 20px">
@@ -99,16 +108,16 @@
                     </ngx-charts-line-chart>
                 </div>
               </div>
-            </div>-->
-</div>
+            </div>
+
             <div style="text-align:center">
                 <h3 style="padding: 30px">
                     Near Real Time 3D Mesh Render
                 </h3>
                 <three-renderer color='#000000' width="100%"></three-renderer>
-            </div>
+            </div>-->
 
-      <!--</div>-->
+      </div>
      </div>
     </div>
 </section>
