@@ -12,26 +12,28 @@
           aria-labelledby="radio-group-label"
           class="button-group"
           [(ngModel)]="selectedColor">
-          <mat-radio-button class="radio-button" *ngFor="let color of colors" [value]="color">
+          <mat-radio-button class="radio-button" *ngFor="let color of colors" [attr.checked]="true" [value]="color">
             {{color}}
           </mat-radio-button>
         </mat-radio-group>
       </section>
 
       <section class="button-group">
-        <label class="radio-button">Color Wheel:</label>
+        <label class="radio-button" style="padding: 20px;"><i>Color Wheel:</i></label>
         <input [(colorPicker)]="color2"  [style.background]="color2"/>
-        {{color2}}
+        <div style="padding-left: 20px;">Selected HEX Color Value: {{color2}}</div>
       </section>
 
-      <div class="radio-button">Your selected color is: {{selectedColor}} </div>
-      <div style="padding: 10px"></div>
+      <p style="color:red; padding-left: 20px;"><em>*Note: If Red, Green, or Blue button is selected then color will change based on button selection. If no button is selected, then color changes based on Color Wheel selection.</em></p>
+
+      <!--<div class="radio-button">Your selected color is: {{selectedColor}} </div>
+      <div style="padding: 10px"></div>-->
 
       <section class="button-group">
         <label class="radio-button"><b>Change Point Cloud Size:</b></label>
-        <p style="padding-left: 10px; padding-right:  10px; padding-top: 10px;">0</p>
+        <p style="padding-left: 10px; padding-right:  10px; padding-top: 10px;">Min 0</p>
        <mat-slider thumbLabel step="0.1" min="0" max="1" [(ngModel)]="selectedPointSize"></mat-slider>
-        <p style="padding-left: 10px; padding-top:  10px;">1</p>
+        <p style="padding-left: 10px; padding-top:  10px;">1 Max</p>
       </section>
 
  

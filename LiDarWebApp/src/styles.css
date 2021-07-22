@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~bootstrap/dist/css/bootstrap.min.css";
+/*@import "~bootstrap/dist/css/bootstrap.min.css";*/
 
 /* Global Styles */
 
@@ -127,6 +127,12 @@ app-header h1 {
   color: white;
   margin: 0;
 }*/
+
+body { margin: 0; 
+     font-family: Roboto, "Helvetica Neue", sans-serif; 
+     display: flex;
+     flex-direction: column;
+}
 
 /* Page Title Bar */
 .header {

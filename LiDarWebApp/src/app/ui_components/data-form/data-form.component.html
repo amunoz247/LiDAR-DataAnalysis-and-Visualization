@@ -10,14 +10,13 @@
               <div class="centered" id="rcorners">
 
               <form class="border border-light p-5" [formGroup]="explorerForm" (ngSubmit)="submit()">
-                <h1 class="text-center">Data Explorer Form</h1>
+                <h1 style="text-align: center;">Data Explorer Form</h1>
 
               <!-- Required Fields -->
               <!-- #1 Select Sensor Location -->
               <div class="form-group">
-                <mat-label>Select Sensor Location*</mat-label>
                 <mat-form-field>
-          
+                  <mat-label for="topic">Select Sensor Location*</mat-label>
                   <mat-select formControlName="topic" class="form-control">
                     <mat-option *ngFor="let location of topicList" [value]="location">
                       {{location}}
@@ -29,11 +28,11 @@
                 </mat-form-field>
               </div>
               <pre></pre>
+
               <!-- #2 Select Data Statistical Analysis -->
-              <h4>Data Statistics*</h4>
               <div class="form-group">
                 <mat-form-field >
-                  <mat-label for="stats" id="mat-form-label-position">Select Data Statistics</mat-label>
+                  <mat-label for="stats">Select Statistics*</mat-label>
                   <mat-select formControlName="stats" class="form-control">
                     <mat-option *ngFor="let stat of statList" [value]="stat">
                       {{stat}}
@@ -48,10 +47,9 @@
 
               <!-- Future Inputs -->
               <!-- #3 Select Time in Minutes -->
-              <h4>Time (Measured in minutes since the top of the hour)</h4>
               <div class="form-group">
                 <mat-form-field>
-                  <mat-label for="time">Select Time</mat-label>
+                  <mat-label for="time">Select Time (Measured in Minutes Since the Top of the Hour)</mat-label>
                   <mat-select formControlName="time" class="form-control">
                     <mat-option *ngFor="let minute of timeSelect" [value]="minute">
                       {{minute}}
@@ -61,7 +59,6 @@
               </div>
               <pre></pre>
               <!-- #4 Select Visualization Type -->
-              <h4>Visualization Type</h4>
               <div class="form-group">
                 <mat-form-field>
                   <mat-label for="visualizationType">Select Visualization Type</mat-label>
@@ -74,7 +71,6 @@
               </div>
               <pre></pre>
               <!-- #5 Select Data File Format -->
-              <h4>Data File Format</h4>
               <div class="form-group">
                 <mat-form-field>
                   <mat-label for="stats">Select Data Format</mat-label>

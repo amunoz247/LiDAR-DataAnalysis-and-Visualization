@@ -26,7 +26,7 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     this.color2 = numberToHex(this.ds.colorValue);
     console.log(this.color2);
-    this.selectedColor = this.colors[0];
+    //this.selectedColor = this.colors[0];
     this.selectedPointSize = this.ds.pointSizeValue;
   }
 
@@ -34,24 +34,21 @@ export class SettingsComponent implements OnInit {
     console.log("Settings Updated");
     console.log(parseInt(this.color2.substr(1)));
     console.log(hexToNumber(this.color2));
-    this.ds.colorValue = hexToNumber(this.color2);//this.color;//this.colorMap.get(this.selectedColor);
+
+    if(this.selectedColor != null)
+      this.ds.colorValue = this.colorMap.get(this.selectedColor);
+    else
+      this.ds.colorValue = hexToNumber(this.color2);//this.color;//this.colorMap.get(this.selectedColor);
     this.ds.pointSizeValue = this.selectedPointSize;
     this.router.navigateByUrl('/visualizations');
   }
-
-
-
-
-
 }
 
-
-
-
-let numberToHex = function (i) {
-   var r = (i >> 16 & 0xFF).toString(16);
-   var g = ((i >> 8) & 0xFF).toString(16);
-   var b = (i & 0xFF).toString(16);
+// Function that converts number value into equivalent hex string
+let numberToHex = function (value) {
+   var r = (value >> 16 & 0xFF).toString(16);
+   var g = ((value >> 8) & 0xFF).toString(16);
+   var b = (value & 0xFF).toString(16);
    if(r.length == 1)
    {
     r = '0' + r;
@@ -64,21 +61,22 @@ let numberToHex = function (i) {
    {
     b = '0' + b;
    }
-   console.log(i);
+   console.log(value);
    return '#'+r+g+b;
 }
 
-
-  let hexToRgb = function (hex){
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16)
+// Function that converts hex string into rgb number
+let hexToRgb = function (hexValue){
+  var rgbResult = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexValue);
+  return rgbResult ? {
+    r: parseInt(rgbResult[1], 16),
+    g: parseInt(rgbResult[2], 16),
+    b: parseInt(rgbResult[3], 16)
   }:null;}
 
-let hexToNumber = function(i) {
-  let value = hexToRgb(i);
+// Function takes in hex string, passes value to hexToRgb(), and returns number values
+let hexToNumber = function(hexValue) {
+  let value = hexToRgb(hexValue);
   return (value.r << 16 )+ (value.g << 8) + value.b; 
   
 }
