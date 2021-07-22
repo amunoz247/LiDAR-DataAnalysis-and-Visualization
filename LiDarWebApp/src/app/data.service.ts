@@ -9,11 +9,16 @@ import { PCD } from './app.component';
 export class DataService {
 
   public Data : PCD;
+  public colorValue : Number;
+  public pointSizeValue: Number;
 
   topicURL : string = 'http://localhost:5000/topics';
   public selectedTopic : string = 'test15thVirginiaSE';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+    this.colorValue = 0xFF0000;
+    this.pointSizeValue = 0.5;
+  }
 
   getTopic(): Observable<string[]>{
     return this.http.get<string[]>(this.topicURL)

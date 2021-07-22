@@ -1,14 +1,22 @@
 /* Button Group for Data Appearance */
-.radio-group {
+/*.radio-group {
   display: flex;
   flex-direction: column;
   margin: 15px 0;
+}*/
+
+.button-group {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
 }
 
 /* Button Margin */
 .radio-button {
   margin: 5px;
 }
+
 
 h2 {
   font-size:  1.5em;

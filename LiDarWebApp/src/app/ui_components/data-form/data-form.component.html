@@ -33,7 +33,7 @@
               <h4>Data Statistics*</h4>
               <div class="form-group">
                 <mat-form-field >
-                  <mat-label for="stats">Select Data Statistics</mat-label>
+                  <mat-label for="stats" id="mat-form-label-position">Select Data Statistics</mat-label>
                   <mat-select formControlName="stats" class="form-control">
                     <mat-option *ngFor="let stat of statList" [value]="stat">
                       {{stat}}

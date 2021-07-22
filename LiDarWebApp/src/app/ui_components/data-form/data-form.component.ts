@@ -4,7 +4,6 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MqttSocketService } from '@app/mqtt/mqttsocket.service';
 import { DataService } from '@app/data.service';
-import * as Pako from 'pako';
 
 @Component({
   selector: 'app-data-form',
@@ -42,7 +41,7 @@ export class DataFormComponent implements OnInit {
   }
   
   submit(){
-    console.log("Data Explorer Form Submitted")
+    console.log("Data Explorer Form Submitted");
     console.log(this.explorerForm.value.topic);
     this.ds.selectedTopic = this.explorerForm.value.topic;
     this.router.navigateByUrl('/visualizations');

@@ -50,7 +50,7 @@ export class RendererComponent implements AfterViewInit {
     if ( colors.length > 0 ) geometry.addAttribute( 'color', new Float32BufferAttribute( colors, 3 ) );
 
     // geometry.setAttribute('position', new Float32BufferAttribute(vertices, 3));
-    var material = new PointsMaterial( { size: 1.0, color: 0xffffff, vertexColors: true });
+    var material = new PointsMaterial( { size: this.ds.pointSizeValue, color: 0xffffff, vertexColors: true });
     this.pcdPoints = new Points( geometry, material );
     this.pcdScene.add( this.pcdPoints );
     this.pcdScene.background = new Color(0x000000);
@@ -109,15 +109,17 @@ export class RendererComponent implements AfterViewInit {
     var vertZ = this.ds.Data['z'];
     var intensity = this.ds.Data['intensity']; 
     //console.log("vertx: ", this.ds.Data['x']);
+    const colorPicked = new Color(this.ds.colorValue);
     const positions = this.pcdPoints.geometry.attributes.position.array;
     const colors = this.pcdPoints.geometry.attributes.color.array;
 
 
     for ( var i=0; i < vertX.length; i++ ){
       this.pcdPoints.geometry.attributes.position.setXYZ(i, vertX[i], vertY[i], vertZ[i]);
-      this.pcdPoints.geometry.attributes.color.setXYZ(i, 255, 0, 0); // Red Point Clouds
+      // this.pcdPoints.geometry.attributes.color.setXYZ(i, 255, 0, 0); // Red Point Clouds
       // this.pcdPoints.geometry.attributes.color.setXYZ(i, 0, 255, 0); // Green Point Clouds
       // this.pcdPoints.geometry.attributes.color.setXYZ(i, 0, 0, 255); // Blue Point Clouds
+      this.pcdPoints.geometry.attributes.color.setXYZ(i, colorPicked.r, colorPicked.g, colorPicked.b);
       //vertices.push(vertX[i], vertY[i], vertZ[i]);
     }
 

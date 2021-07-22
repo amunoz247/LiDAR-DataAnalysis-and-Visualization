@@ -9,6 +9,7 @@ import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
 import { MqttSocketService } from './mqtt/mqttsocket.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './ui_components/header/header.component';
@@ -43,7 +44,8 @@ import { VisualizationsComponent } from './ui_components/visualizations/visualiz
     ReactiveFormsModule,
     AppMaterialModule,
     BrowserAnimationsModule,
-    NgxChartsModule
+    NgxChartsModule,
+    ColorPickerModule
   ],
   providers: [MqttSocketService],
   bootstrap: [AppComponent]

@@ -35,6 +35,7 @@
     "stats-js": "^1.0.1",
     "three": "^0.129.0",
     "tslib": "^2.0.0",
+    "ngx-color-picker": "^11.0.0",
     "zone.js": "~0.11.3"
   },
   "devDependencies": {

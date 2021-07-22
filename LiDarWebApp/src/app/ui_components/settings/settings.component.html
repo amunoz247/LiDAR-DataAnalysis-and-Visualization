@@ -1,4 +1,71 @@
-<section class="hero is-primary is-bold">
+<div class="header">
+  <h1>Settings</h1>
+</div>
+
+  <div class="container">
+
+    <!------Select Color for Point Cloud---------->
+    <h2 class="is-bold">Appearance</h2>
+    <section class="button-group">
+        <label class="radio-button"><b>Change Point Cloud Color:</b></label>
+        <mat-radio-group
+          aria-labelledby="radio-group-label"
+          class="button-group"
+          [(ngModel)]="selectedColor">
+          <mat-radio-button class="radio-button" *ngFor="let color of colors" [value]="color">
+            {{color}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </section>
+
+      <section class="button-group">
+        <label class="radio-button">Color Wheel:</label>
+        <input [(colorPicker)]="color2"  [style.background]="color2"/>
+        {{color2}}
+      </section>
+
+      <div class="radio-button">Your selected color is: {{selectedColor}} </div>
+      <div style="padding: 10px"></div>
+
+      <section class="button-group">
+        <label class="radio-button"><b>Change Point Cloud Size:</b></label>
+        <p style="padding-left: 10px; padding-right:  10px; padding-top: 10px;">0</p>
+       <mat-slider thumbLabel step="0.1" min="0" max="1" [(ngModel)]="selectedPointSize"></mat-slider>
+        <p style="padding-left: 10px; padding-top:  10px;">1</p>
+      </section>
+
+ 
+      <div style="padding: 10px"></div>
+
+      <!------Select Theme Color of application---------->
+      <h2 class="is-bold">Theme</h2>
+        <section class="button-group">
+          <label><b>Change App Theme:</b></label><pre></pre>
+        </section>
+          <mat-slide-toggle color="primary">
+            Primary Theme
+          </mat-slide-toggle> <br />
+          <br />
+          <mat-slide-toggle color="accent">
+            Accent Theme
+          </mat-slide-toggle>
+          <br />
+          <br />
+          <mat-slide-toggle color="warn">
+            Warn Theme
+          </mat-slide-toggle>
+        <div style="padding: 10px;"></div>
+
+      <div style="text-align: center; border-top: 1px solid #aaaaaa; padding-top: 20px;">
+        <p>Saves changes and goes back to Dashboard.</p>
+        <button mat-raised-button class="btn btn-primary" color="accent" (click)="setChanges();"><i class="fa fa-plus"></i>Set Settings</button>
+      </div>
+  </div>
+
+
+
+
+<!--<section class="hero is-primary is-bold">
     <div class="hero-body">
 
       <div class="header">
@@ -7,9 +74,9 @@
 
       <div class="container">
 
-      <!------Select Color for Point Cloud---------->
+      ------Select Color for Point Cloud----------
       <h2 class="is-bold">Appearance</h2>
-      <label id="radio-group-label">Change Point Cloud Color</label>
+      <label id="radio-group-label">Change Point Cloud Color:</label>
       <mat-radio-group
         aria-labelledby="radio-group-label"
         class="radio-group"
@@ -21,9 +88,9 @@
       <div>Your selected color is: {{selectedColor}} </div>
       <div style="padding: 10px"></div>
 
-      <!------Select Theme Color of application---------->
+      ------Select Theme Color of application----------
       <h2 class="is-bold">Theme</h2>
-      <label>Change App Theme</label><pre></pre>
+      <label>Change App Theme:</label><pre></pre>
         <mat-slide-toggle color="primary">
           Primary Theme
         </mat-slide-toggle> <br />
@@ -39,4 +106,4 @@
 
     </div>
     </div>
-</section>
+</section>-->
