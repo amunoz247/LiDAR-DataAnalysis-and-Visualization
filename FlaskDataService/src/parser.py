@@ -14,7 +14,6 @@ import re
 import struct
 import warnings
 import datetime
-import bson
 import json
 
 import numpy as np
@@ -119,11 +118,17 @@ def build_dtype(metadata):
 Parameters (content: str - Path to the pcd file, isfilename: bool).
 Returns a pandas Dataframe."""
 def read_pcd(content, isfilename=False): 
-
+    # Initialize data dictionary to store all the cleaned data
     data = {}
+
+    # Initialize json dictionary
+    jsondict = {}
+
+    # Loops through pcd file
     if isfilename:
      with open(content, 'rb') as f:
         header = []
+        # Loops through header to get metadata values
         while True:
             ln = f.readline().strip().decode()
             header.append(ln)
@@ -170,15 +175,15 @@ def read_pcd(content, isfilename=False):
                 column = np.fromstring(buf[ix:(ix + bytes)], dt)
                 pc_data[dtype.names[dti]] = column
                 ix += bytes
-    else: # start changes from here
+    
+    else: 
         header = []
         lines = content.split(b'\n')
-        #print(lines)
+
         for ln in lines:
-            #print(ln)
             header.append(ln.decode())
+
             if ln.startswith(b'DATA'):
-                #print (header)
                 metadata = parse_header(header)
                 dtype = build_dtype(metadata)
             elif ln.startswith(b'Time'):
@@ -189,12 +194,9 @@ def read_pcd(content, isfilename=False):
                 minute = int(minutes_cal)
                 break
 
-
         skip = content.find(b'Time')
-        #print (skip)
         skip = skip + content[skip:].find(b'\n')+1
         rowstep = metadata['points'] * dtype.itemsize
-        #print(skip)
         if metadata['data'] == 'ascii':
             pc_data = np.fromstring(content[skip:], dtype=dtype, delimiter=' ')
 
@@ -231,43 +233,36 @@ def read_pcd(content, isfilename=False):
                 pc_data[dtype.names[dti]] = column
                 ix += bytes
     df = pd.DataFrame(pc_data)
-    #time_value = pd.to_datetime(metadata['time'], unit='s')
-    #topic = 
 
-    # check if dataframe contains color info
+    # Create color string and check if dataframe contains color info
     col = 'rgb'
     if col in df.columns:
         # get the 'rgb' column from dataframe
         packed_rgb = df.rgb.values
-        # 'rgb' values are stored as float
-        # treat them as int
+        # 'rgb' values are stored as float in dataframe. Values converted to int using numpy
         packed_rgb = packed_rgb.astype(np.float32).tostring()
         packed_rgb = np.frombuffer(packed_rgb, dtype=np.int32)
-        # unpack 'rgb' into 'red', 'green' and 'blue' channel
+
+        # Values unpacked into 'red', 'green' and 'blue' indices
         df['red'] = np.asarray((packed_rgb >> 16) & 255, dtype=np.uint8)
         df['green'] = np.asarray((packed_rgb >> 8) & 255, dtype=np.uint8)
         df['blue'] = np.asarray(packed_rgb & 255, dtype=np.uint8)
-        # remove packed rgb since we don't need it anymore
+
+        # Remove packed rgb from dataframe as it is no longer needed
         df.drop(col, axis=1, inplace=True)
 
+    # Cleaned data stored in data dictionary
     data['topic'] = topic_value
     data['time'] = str(minute)
     data['points'] = df.to_json(index = False, orient = 'split')
-
     data['objects'] = metadata['objects']
 
-    jsondict = {}
-    
     # Convert Pandas dataframe vertices values into a json dictionary 
     jsondict['x'] = list(df['x'])
     jsondict['y'] = list(df['y'])
     jsondict['z'] = list(df['z'])
     jsondict['intensity'] = list(df['intensity'])
-    #data["points"] = bson.dumps(jsondict)
     data["points"] = json.dumps(json.loads(json.dumps(jsondict), parse_float=lambda x: round(float(x), 2)))
-    #data['points'] = json.dumps(jsondict)
-    #generator = ( data['points'] for x in data )
 
-
-    #data['points'] = df.values.tolist()
+    # Returns clean data dictionary to main Flask app
     return data
