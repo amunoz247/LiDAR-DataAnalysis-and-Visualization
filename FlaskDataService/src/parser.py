@@ -1,4 +1,15 @@
-# improved pyntcloud pcd.py
+# ----------------------------------------------------------------------------------------
+#
+#   Point Cloud Parser Script
+#
+#   Authors: Andrew Munoz, Chase Carthen
+#   Date: 06/15/2021
+#   Purpose: Takes in LiDAR point cloud data and parses through the data.
+#            Reads through PCD file and passes cleaned data to a pandas
+#            dataframe which is then returned to app.py.
+#
+# ----------------------------------------------------------------------------------------
+
 import re
 import struct
 import warnings
@@ -9,7 +20,7 @@ import json
 import numpy as np
 import pandas as pd
 
-
+# PCD Header Mapping to numpy type
 numpy_pcd_type_mappings = [(np.dtype('float32'), ('F', 4)),
                            (np.dtype('float64'), ('F', 8)),
                            (np.dtype('uint8'), ('U', 1)),
@@ -22,13 +33,18 @@ numpy_pcd_type_mappings = [(np.dtype('float32'), ('F', 4)),
 numpy_type_to_pcd_type = dict(numpy_pcd_type_mappings)
 pcd_type_to_numpy_type = dict((q, p) for (p, q) in numpy_pcd_type_mappings)
 
-
-def parse_header(lines): # parse time, topic, and objects 
+# Function that parses header objects
+def parse_header(lines): 
+    
+    # Dictionary to store metadata found in the header 
     metadata = {
         'objects': []
     }
+
+    # Boolean used to search for object coordinates
     searchSwitch = False
 
+    # Begin looping through .pcd header
     for ln in lines:
         if ln.startswith('#') or len(ln) < 2:
             continue
@@ -70,8 +86,6 @@ def parse_header(lines): # parse time, topic, and objects
             metadata[key] = value
         elif key == 'end':
             searchSwitch = False
-        # TODO apparently count is not required?
-    # add some reasonable defaults
     if 'count' not in metadata:
         metadata['count'] = [1] * len(metadata['fields'])
     if 'viewpoint' not in metadata:
@@ -80,13 +94,10 @@ def parse_header(lines): # parse time, topic, and objects
         metadata['version'] = '.7'
     return metadata
 
-
+""" Function builds numpy structured array dtype from the pcl metadata.
+NOTE: Fields with count > 1 are 'flattened' by creating multiple single-count fields.
+TODO: allow 'proper' multi-count fields."""
 def build_dtype(metadata):
-    """ build numpy structured array dtype from pcl metadata.
-    note that fields with count > 1 are 'flattened' by creating multiple
-    single-count fields.
-    TODO: allow 'proper' multi-count fields.
-    """
     fieldnames = []
     typenames = []
     for f, c, t, s in zip(metadata['fields'],
@@ -104,17 +115,11 @@ def build_dtype(metadata):
     dtype = np.dtype(list(zip(fieldnames, typenames)))
     return dtype
 
+""" Reads in pcd file and return the elements as pandas Dataframes.
+Parameters (content: str - Path to the pcd file, isfilename: bool).
+Returns a pandas Dataframe."""
+def read_pcd(content, isfilename=False): 
 
-def read_pcd(content, isfilename=False): # alter to return out objects at the correct time and topic
-    """ Reads in pcd file and return the elements as pandas Dataframes.
-    Parameters
-    ----------
-    filename: str
-        Path to the pcd file.
-    Returns
-    -------
-    pandas Dataframe.
-    """
     data = {}
     if isfilename:
      with open(content, 'rb') as f:
@@ -252,6 +257,7 @@ def read_pcd(content, isfilename=False): # alter to return out objects at the co
     data['objects'] = metadata['objects']
 
     jsondict = {}
+    
     # Convert Pandas dataframe vertices values into a json dictionary 
     jsondict['x'] = list(df['x'])
     jsondict['y'] = list(df['y'])

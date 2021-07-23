@@ -1,6 +1,19 @@
+# ----------------------------------------------------------------------------------------
+#
+#   Flask Backend Main Program
+#
+#   Authors: Andrew Munoz, Chase Carthen
+#   Date: 06/15/2021
+#   Purpose: Takes in LiDAR point cloud data being streamed from sensors
+#            and passes the data to parser.py. Once the data has been parsed,
+#            it is then passed up to the Angular front end web server to be
+#            analyzed through data visualization graphs.
+#
+# ----------------------------------------------------------------------------------------
+
+import sys
 import eventlet
 import json
-import gzip
 import time
 import datetime
 import threading
@@ -13,9 +26,14 @@ from flask_bootstrap import Bootstrap
 from multiprocessing import Queue
 from parser import read_pcd
 
+# Declare threading variables
 eventlet.monkey_patch()
 lock = threading.Lock()
 threadedData = []
+
+"""Function that processes mqtt message and compresses the message.
+Message is threaded and passed into read_pcd function to be parsed
+and cleaned. Passes cleaned data to data[]."""
 def process_message():
     global lock
     while True:
@@ -65,9 +83,6 @@ app.config['MQTT_CLEAN_SESSION'] = True
 fpsDict = {}
 
 countDict = {}
-
-# threadedData = []
-# lock = threading.Lock()
 
 mqttFirstFrame = False
 startTime = datetime.datetime.now()
@@ -181,15 +196,23 @@ def handle_logging(client, userdata, level, buf):
 
 
 if __name__ == '__main__':
+
     # Open Topic File and Read in available topics
     topicFile = open('./topic.txt', 'r')
     topicsAvailable = topicFile.read().split('\n')
+
+    # Loops through lines in text file and adds values to dictionary
     for line in topicsAvailable:
         fpsDict[line] = 0
         countDict[line] = 0
     topicFile.close()
 
-
+    # try:
+    #     while True:
+    #         pass      
+    # except (KeyboardInterrupt, SystemExit):
+    #     print('Program was Interrupted through Manual Input. Exiting Program ...')
+    #     sys.exit()
 
     # Keep reloader set to false otherwise this will create two Flask instances.
     socketio.run(app, host='0.0.0.0', port=5000, use_reloader=False, debug=False)
