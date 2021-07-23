@@ -12,7 +12,7 @@
           aria-labelledby="radio-group-label"
           class="button-group"
           [(ngModel)]="selectedColor">
-          <mat-radio-button class="radio-button" *ngFor="let color of colors" [attr.checked]="true" [value]="color">
+          <mat-radio-button class="radio-button" *ngFor="let color of colors" (change)="colorPicker(color)" [value]="color">
             {{color}}
           </mat-radio-button>
         </mat-radio-group>

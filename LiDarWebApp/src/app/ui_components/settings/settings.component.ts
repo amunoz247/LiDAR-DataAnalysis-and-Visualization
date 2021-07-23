@@ -30,15 +30,21 @@ export class SettingsComponent implements OnInit {
     this.selectedPointSize = this.ds.pointSizeValue;
   }
 
+  colorPicker(value: string) {
+    //if(this.selectedColor != null) {
+      this.selectedColor = value;
+      this.color2 = numberToHex(this.colorMap.get(this.selectedColor));
+      console.log("test");
+
+    //}
+  }
+
   setChanges() {
     console.log("Settings Updated");
     console.log(parseInt(this.color2.substr(1)));
     console.log(hexToNumber(this.color2));
 
-    if(this.selectedColor != null)
-      this.ds.colorValue = this.colorMap.get(this.selectedColor);
-    else
-      this.ds.colorValue = hexToNumber(this.color2);//this.color;//this.colorMap.get(this.selectedColor);
+    this.ds.colorValue = hexToNumber(this.color2);//this.color;//this.colorMap.get(this.selectedColor);
     this.ds.pointSizeValue = this.selectedPointSize;
     this.router.navigateByUrl('/visualizations');
   }

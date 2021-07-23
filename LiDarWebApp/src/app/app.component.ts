@@ -57,4 +57,5 @@ export class PCD{
   y:[];
   z:[];
   intensity:[];
+  objects:any;
 }

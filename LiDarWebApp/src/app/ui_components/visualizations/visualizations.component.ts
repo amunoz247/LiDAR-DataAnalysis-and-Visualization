@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MqttSocketService } from '@app/mqtt/mqttsocket.service';
 import { DataService } from '@app/data.service';
 import { PCD } from '@app/app.component';
-import * as BSON from 'bson';
 import * as Pako from 'pako';
 import * as fzstd from 'fzstd';
 
@@ -16,9 +15,36 @@ export class VisualizationsComponent implements OnInit {
   public pointCloud : PCD[] = [];
   parsedJSON: any;
 
-  constructor(private ds : DataService, private ms : MqttSocketService){}
+  locationObjects: any;
+  objectCount: Number = 0;
+  messageOutput: String;
 
-  pageName = 'Data Visualization Dashboard';
+  public barData = [
+    {
+      "name": "Vehicles",
+      "value": 11
+    },
+    {
+      "name": "Pedestrians",
+      "value": 8
+    }
+  ];
+
+  public lineData = [
+    {
+      "name": "Objects",
+      "series": [
+        {
+          "name": "1",
+          "value": "8"
+        },
+        {
+          "name": "2",
+          "value": "15"
+        }
+      ],
+    }
+  ];
 
   // options for the chart
   showXAxis = true;
@@ -29,10 +55,11 @@ export class VisualizationsComponent implements OnInit {
   showYAxisLabel = true;
   xAxisBar = 'Object';
   yAxisBar = 'Count';
-  timeline = true;
+  updateInterval: NodeJS.Timer;
+  counter = 1;
 
   // axis labels for line chart
-  xAxisLine = 'Minutes';
+  xAxisLine = 'Seconds';
   yAxisLine = 'Count';
 
   public layoutGap: string = '30px';
@@ -45,64 +72,19 @@ export class VisualizationsComponent implements OnInit {
     domain: ['#FA8072', '#90EE90', '#FF7F50', '#9370DB', '#9370DB', '#87CEFA']
   };
 
-  public barData = [
-    {
-      "name": "Vehicles",
-      "value": 235
-    },
-    {
-      "name": "Pedestrians",
-      "value": 77
-    }
-  ];
-
-  public multiLineData = [
-    {
-      "name": "Vehicles",
-      "series": [
-        {
-          "name": "1",
-          "value": "8"
-        },
-        {
-          "name": "2",
-          "value": "15"
-        },
-        {
-          "name": "3",
-          "value": "7"
-        },
-        {
-          "name": "4",
-          "value": "8"
-        }
-      ],
-    },
-    {
-      "name": "Pedestrians",
-      "series": [
-        {
-          "name": "1",
-          "value": "12"
-        },
-        {
-          "name": "2",
-          "value": "14"
-        },
-        {
-          "name": "3",
-          "value": "11"
-        },
-        {
-          "name": "4",
-          "value": "9"
-        }
-      ],
-    }
-  ];
 
   // Table Headers to be displayed on Webpage
   headers = ["time", "topic", "x", "y", "z", "intensity"]
+
+  constructor(private ds : DataService, private ms : MqttSocketService){
+
+    this.lineData = [{
+      "name": "Objects",
+      "series": this.initLineChart()
+    }];
+
+    this.updateInterval = setInterval(() => this.addRealTimeData(), 2000);
+  }
 
 
   ngOnInit()
@@ -113,8 +95,9 @@ export class VisualizationsComponent implements OnInit {
     this.ms.on('mqtt_message', function(value){
         console.log(value);
         //console.log(pcd);
-        console.log(this);
-        console.log(value.payload);
+        // console.log(this);
+        // console.log(value.payload);
+        console.log(value.objects);
         // var uncompressedPayload = Pako.inflate(value.payload, { to: 'string' });
         const compressed = new Uint8Array(value.payload);
         const uncompressedPayload = fzstd.decompress(compressed);
@@ -133,12 +116,46 @@ export class VisualizationsComponent implements OnInit {
         }
         console.log(app.pointCloud.length);
         app.pointCloud.push({time: value.time, topic: value.topic, x: this.parsedJSON.x, 
-          y: this.parsedJSON.y, z: this.parsedJSON.z, intensity: this.parsedJSON.intensity});
+          y: this.parsedJSON.y, z: this.parsedJSON.z, intensity: this.parsedJSON.intensity, 
+          objects: value.objects});
         app.ds.Data = app.pointCloud[0];
     });
   }
 
   onSelect(event) {
     console.log(event);
+  }
+
+  initLineChart() {
+    const array = [];
+    for (let i = 0; i < 100; i++) {
+      array.push({
+        "name": '0',
+        "value": 0
+      });
+    }
+    return array;
+  }
+
+  addRealTimeData() {
+    this.counter++;
+    this.lineData[0].series.shift();
+
+    if(this.ds.Data.topic == this.ds.selectedTopic)
+      this.locationObjects = this.ds.Data.objects;
+
+    this.objectCount = this.locationObjects.length;
+
+    // if(this.objectCount == 0)
+    //   this.messageOutput = 'No data is currently being streamed.'
+
+    const objCountData =
+    {
+      "name": this.counter.toString(),
+      //"value": this.ds.Data.objects.length
+      "value": this.locationObjects.length
+    }
+    this.lineData[0].series.push(objCountData);
+    this.lineData = [...this.lineData];
   }
 }

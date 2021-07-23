@@ -28,7 +28,7 @@ select {
 
 #rcorners {
   background: rgb(0, 27, 148, 0.2);
-  width: 50%;
+  width: 40%;
   border-radius: 15px;
   border: 2px double black;
   box-shadow: 5px 5px 2.5px grey;

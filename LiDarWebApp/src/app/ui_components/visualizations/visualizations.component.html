@@ -14,7 +14,7 @@
 
         <div fxLayout="row" fxLayout.lt-sm="column" fxFlexAlign="baseline" [fxLayoutGap]="layoutGap">
             <mat-card fxFlex="1 1 50%" class="aligncenter">
-              <h3><b>Vertical Bar Chart</b></h3>
+              <h3><b>Average Number of Objects</b></h3>
               <div class="align-chart-left">
                 <ngx-charts-bar-vertical
                 [view]="[600,400]"
@@ -34,12 +34,12 @@
             </mat-card>
             
             <mat-card fxFlex="1 1 50%" class="aligncenter">
-              <h3><b>Multi Line Graph</b></h3>
+              <h3><b>Real Time Stream (per Second)</b></h3>
               <div class="align-chart-right">
                 <ngx-charts-line-chart
-                [view]="[700,400]"
+                [view]="[600,400]"
                 [scheme]="lineColorScheme"
-                [results]="multiLineData"
+                [results]="lineData"
                 [gradient]="gradient"
                 [xAxis]="showXAxis"
                 [yAxis]="showYAxis"
@@ -47,9 +47,13 @@
                 [showXAxisLabel]="showXAxisLabel"
                 [showYAxisLabel]="showYAxisLabel"
                 [xAxisLabel]="xAxisLine"
-                [yAxisLabel]="yAxisLine">
+                [yAxisLabel]="yAxisLine"
+                [autoScale]="true"
+                [animations]="false"
+                (select)="onSelect($event)">
                 </ngx-charts-line-chart>
               </div>
+              <div style="padding-top: 350px;">Live Count: {{objectCount}}</div>
             </mat-card>
         </div>
 

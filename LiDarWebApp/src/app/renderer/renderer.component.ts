@@ -87,9 +87,9 @@ export class RendererComponent implements AfterViewInit {
         requestAnimationFrame( animate );
         stats.begin();
 
-        console.log(this.ds.Data.topic + ' ' + this.ds.selectedTopic);
-        if(this.ds.Data.topic == this.ds.selectedTopic){
-
+        if(this.ds.Data != null && this.ds.Data.topic == this.ds.selectedTopic) {
+          console.log(this.ds.Data);
+          console.log(this.ds.Data.topic + ' ' + this.ds.selectedTopic);
           console.log(this.ds.Data.topic);
           this.updateBuffer();
         }
@@ -147,7 +147,7 @@ export class RendererComponent implements AfterViewInit {
     //console.log(this.pcdPoints.geometry);
     console.log(this.ds.Data['x'].length);
   }
-  render() { console.log('Hello Im working'); this.renderer.render( this.pcdScene, this.pcamera ); }
+  render() { console.log('Render is being called'); this.renderer.render( this.pcdScene, this.pcamera ); }
 }
 
 

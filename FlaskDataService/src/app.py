@@ -36,7 +36,9 @@ def process_message():
             stop = (datetime.datetime.now()-start).total_seconds()
             print(stop)
             # data['payload'] = bytes(values['points'])
+            data['objects'] = values['objects']
             data['time'] = values['time']
+
             socketio.emit('mqtt_message', data=data) # can emit on topic name, can grab info from the topic
         else:
             print('test')
@@ -191,5 +193,3 @@ if __name__ == '__main__':
 
     # Keep reloader set to false otherwise this will create two Flask instances.
     socketio.run(app, host='0.0.0.0', port=5000, use_reloader=False, debug=False)
-
-    #count_fps_datamesh(30)

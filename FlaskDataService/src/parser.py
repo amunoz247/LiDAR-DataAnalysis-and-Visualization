@@ -24,10 +24,27 @@ pcd_type_to_numpy_type = dict((q, p) for (p, q) in numpy_pcd_type_mappings)
 
 
 def parse_header(lines): # parse time, topic, and objects 
-    metadata = {}
+    metadata = {
+        'objects': []
+    }
+    searchSwitch = False
+
     for ln in lines:
         if ln.startswith('#') or len(ln) < 2:
             continue
+        print(ln)
+        if not ln.startswith('end') and searchSwitch:
+            coordinates = ln.split(' ')
+            positions = {}
+            print(coordinates)
+            positions['minx'] = float(coordinates[0])
+            positions['maxx'] = float(coordinates[1])
+            positions['miny'] = float(coordinates[2])
+            positions['maxy'] = float(coordinates[3])
+            positions['minz'] = float(coordinates[4])
+            positions['maxz'] = float(coordinates[5])
+            positions['class'] = 'Object'
+            metadata['objects'].append(positions)
         match = re.match('(\w+)\s+([\w\s\.]+)', ln)
         if not match:
             warnings.warn("warning: can't understand line: %s" % ln)
@@ -46,14 +63,13 @@ def parse_header(lines): # parse time, topic, and objects
         elif key == 'data':
             metadata[key] = value.strip().lower()
         elif key == 'minx': #object position values
-           for ln in lines:
-               metadata[key] = map(float, value.split())
-               if ln.startswith('end'):
-                  break
+            searchSwitch = True
         elif key == 'topic':
             metadata[key] = value
         elif key == 'time':
             metadata[key] = value
+        elif key == 'end':
+            searchSwitch = False
         # TODO apparently count is not required?
     # add some reasonable defaults
     if 'count' not in metadata:
@@ -232,6 +248,8 @@ def read_pcd(content, isfilename=False): # alter to return out objects at the co
     data['topic'] = topic_value
     data['time'] = str(minute)
     data['points'] = df.to_json(index = False, orient = 'split')
+
+    data['objects'] = metadata['objects']
 
     jsondict = {}
     # Convert Pandas dataframe vertices values into a json dictionary 

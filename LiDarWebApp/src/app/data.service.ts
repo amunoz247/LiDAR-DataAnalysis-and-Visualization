@@ -25,7 +25,3 @@ export class DataService {
   }
 
 }
-
-// export class topics {
-
-// }
