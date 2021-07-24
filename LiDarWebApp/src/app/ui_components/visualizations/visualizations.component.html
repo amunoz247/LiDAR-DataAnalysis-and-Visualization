@@ -1,23 +1,27 @@
 <section class="hero is-primary is-bold">
-    <div class="hero-body">
+    <div class="hero-body" id="page-container">
 
       <div class="header">
         <h1>Data Visualization Dashboard</h1>
       </div>
 
-      <div style="text-align:center" id="page-container">
+      <div style="text-align:center">
           <h2 class="text-secondary" style="padding: 20px">
-            Charts and Graphs
+            Charts and Graphs 
           </h2>
 
-    <div #flexLayoutContainer style="padding-left: 150px; padding-right: 150px">
+          <div *ngIf="objectCount == 0" style="align-items: right;">
+            <mat-spinner value="50" diameter="50" style="margin:0 auto; z-index: 100;"></mat-spinner>
+            <p>Waiting for data stream.</p>
+          </div>
+
+    <div #flexLayoutContainer  style="position: relative; padding-left: 200px; padding-right: 200px;">
 
         <div fxLayout="row" fxLayout.lt-sm="column" fxFlexAlign="baseline" [fxLayoutGap]="layoutGap">
-            <mat-card fxFlex="1 1 50%" class="aligncenter">
+            <mat-card fxFlex="1 1 50%" class="align-header-center">
               <h3><b>Average Number of Objects</b></h3>
               <div class="align-chart-left">
                 <ngx-charts-bar-vertical
-                [view]="[600,400]"
                 [scheme]="barColorScheme"
                 [results]="barData"
                 [gradient]="gradient"
@@ -30,14 +34,14 @@
                 [yAxisLabel]="yAxisBar"
                 (select)="onSelect($event)">
                 </ngx-charts-bar-vertical>
+                <div *ngIf="objectCount == 0">No Data.</div>
               </div>
             </mat-card>
             
-            <mat-card fxFlex="1 1 50%" class="aligncenter">
-              <h3><b>Real Time Stream (per Second)</b></h3>
+            <mat-card fxFlex="1 1 50%" class="align-header-center">
+              <h3><b>Real Time Stream of Total Objects Detected (per Second)</b></h3>
               <div class="align-chart-right">
                 <ngx-charts-line-chart
-                [view]="[600,400]"
                 [scheme]="lineColorScheme"
                 [results]="lineData"
                 [gradient]="gradient"
@@ -57,14 +61,16 @@
             </mat-card>
         </div>
 
-        <div fxLayout="column" [fxLayoutGap]="layoutGap" style="padding-top: 30px; padding-bottom: 30px;">
+        <div fxLayout="column" [fxLayoutGap]="layoutGap" style="padding-top: 25px; padding-bottom: 25px;">
         <mat-card fxFlex="1 1 50%" style="position:relative">
           <h3><b>Near Real Time 3D Mesh Render</b></h3>
           <div class="align-chart-center">
-                <three-renderer color='#000000' width="100%"></three-renderer>
+                <three-renderer color='#000000'></three-renderer>
           </div>
+          <!--<div *ngIf='false'> No data!!!</div>-->
         </mat-card>
     </div>
+
      <!--<div class="container" id="page-container">
       <div style="text-align:center">
           <h2 class="text-secondary" style="padding: 20px">

@@ -128,6 +128,7 @@ app-header h1 {
   margin: 0;
 }*/
 
+/* Page body page formatting */
 body { margin: 0; 
      font-family: Roboto, "Helvetica Neue", sans-serif; 
      display: flex;
@@ -143,13 +144,14 @@ body { margin: 0;
   font-size: 50px;
 }
 
-/* Footer Styling */
+/* Container that adds margin space for footer at the bottom of the page. */
 #page-container {
   position: relative;
   min-height: 100vh;
   margin-bottom: 2.5rem;
 }
 
+/* Footer Styling */
 #footer {
   position: fixed;
   bottom: 0;

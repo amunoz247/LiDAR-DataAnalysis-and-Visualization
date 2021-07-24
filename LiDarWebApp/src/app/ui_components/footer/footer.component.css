@@ -1,15 +1,16 @@
 .alignleft {
   float: left;
-  width:33.33333%;
+  width:31%;
+  padding-left: 20px;
   text-align:left;
 }
 .aligncenter {
   float: left;
-  width:33.33333%;
+  width:33.3333%;
   text-align:center;
 }
 .alignright {
  float: left;
- width:33.33333%;
+ width:33.3333%;
  text-align:right;
 }

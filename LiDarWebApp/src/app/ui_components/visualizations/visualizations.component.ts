@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MqttSocketService } from '@app/mqtt/mqttsocket.service';
 import { DataService } from '@app/data.service';
 import { PCD } from '@app/app.component';
@@ -11,9 +11,13 @@ import * as fzstd from 'fzstd';
   styleUrls: ['./visualizations.component.css']
 })
 export class VisualizationsComponent implements OnInit {
+  @ViewChild('flexLayoutContainer') flexLayoutContainerElement: ElementRef;
 
   public pointCloud : PCD[] = [];
   parsedJSON: any;
+
+  pastTime: String;
+  public messageCounter: number;
 
   locationObjects: any;
   objectCount: Number = 0;
@@ -22,29 +26,15 @@ export class VisualizationsComponent implements OnInit {
   public barData = [
     {
       "name": "Vehicles",
-      "value": 11
+      "value": 0
     },
     {
       "name": "Pedestrians",
-      "value": 8
+      "value": 0
     }
   ];
 
-  public lineData = [
-    {
-      "name": "Objects",
-      "series": [
-        {
-          "name": "1",
-          "value": "8"
-        },
-        {
-          "name": "2",
-          "value": "15"
-        }
-      ],
-    }
-  ];
+  public lineData = [];
 
   // options for the chart
   showXAxis = true;
@@ -56,13 +46,14 @@ export class VisualizationsComponent implements OnInit {
   xAxisBar = 'Object';
   yAxisBar = 'Count';
   updateInterval: NodeJS.Timer;
+  updateBar: NodeJS.Timer;
   counter = 1;
 
   // axis labels for line chart
   xAxisLine = 'Seconds';
   yAxisLine = 'Count';
 
-  public layoutGap: string = '30px';
+  public layoutGap: string = '25px';
 
   public barColorScheme = {
     domain: ['#9370DB', '#87CEFA', '#90EE90', '#9370DB', '#FA8072', '#FF7F50']
@@ -76,6 +67,14 @@ export class VisualizationsComponent implements OnInit {
   // Table Headers to be displayed on Webpage
   headers = ["time", "topic", "x", "y", "z", "intensity"]
 
+  public elementStyle: object = {
+    'height.px': 20
+  };
+
+  public containerStyle: object = {
+    'width.px': 256
+  }
+
   constructor(private ds : DataService, private ms : MqttSocketService){
 
     this.lineData = [{
@@ -84,6 +83,7 @@ export class VisualizationsComponent implements OnInit {
     }];
 
     this.updateInterval = setInterval(() => this.addRealTimeData(), 2000);
+    // this.updateBar = setInterval(() => this.addObjectData(), 2000);
   }
 
 
@@ -126,6 +126,19 @@ export class VisualizationsComponent implements OnInit {
     console.log(event);
   }
 
+  onResize($event: Event) {
+    this.setSize();
+  }
+
+  setSize() {
+    this.elementStyle['height.px'] = this.flexLayoutContainerElement.nativeElement.offsetHeight;
+    this.containerStyle['width.px'] = this.flexLayoutContainerElement.nativeElement.clientWidth;
+  }
+
+  initBarChart() {
+
+  }
+
   initLineChart() {
     const array = [];
     for (let i = 0; i < 100; i++) {
@@ -137,25 +150,117 @@ export class VisualizationsComponent implements OnInit {
     return array;
   }
 
+//   addObjectData() {
+//     let carCount = 0;
+//     let pedestrianCount = 0;
+// console.log('CountsRL: '+this.ds.Data.topic+' '+this.ds.selectedTopic);
+//     if(this.ds.Data.topic == this.ds.selectedTopic)
+//     {
+
+//     console.log('Counts: '+this.ds.Data.topic+' '+this.ds.selectedTopic);
+
+//     for(let i = 0; i < this.ds.Data.objects.length; i++) {
+//         let xsize = this.ds.Data.objects[i].maxx - this.ds.Data.objects[i].minx;
+//         let ysize = this.ds.Data.objects[i].maxy - this.ds.Data.objects[i].miny;
+//         let zsize = this.ds.Data.objects[i].maxz - this.ds.Data.objects[i].minz;
+
+//         let volume = xsize * ysize * zsize;
+
+//         // Average volume of pedestrian
+//         if(volume > 0.1) {
+//           carCount++;
+//         }
+//         else {
+//           pedestrianCount++;
+//         }
+//       }
+
+//     this.barData = [
+//     {
+//       "name": "Vehicles",
+//       "value": carCount
+//     },
+//     {
+//       "name": "Pedestrians",
+//       "value": pedestrianCount
+//     }
+//   ];
+// }
+//     console.log('Counts'+carCount+' '+pedestrianCount);
+//   }
+
   addRealTimeData() {
+    // Create count variables for bar graph
+    let carCount = 0;
+    let pedestrianCount = 0;
+
+    // Increament Counter for Line graph and series to shift for each update
     this.counter++;
     this.lineData[0].series.shift();
 
-    if(this.ds.Data.topic == this.ds.selectedTopic)
+    // Check for selected topic and set objects of that topic to dictionary
+    if(this.ds.Data.topic == this.ds.selectedTopic) {
       this.locationObjects = this.ds.Data.objects;
 
+      // Loops through data service object list and calculates volume of objects
+      for(let i = 0; i < this.ds.Data.objects.length; i++) {
+        let xsize = this.ds.Data.objects[i].maxx - this.ds.Data.objects[i].minx;
+        let ysize = this.ds.Data.objects[i].maxy - this.ds.Data.objects[i].miny;
+        let zsize = this.ds.Data.objects[i].maxz - this.ds.Data.objects[i].minz;
+
+        let volume = xsize * ysize * zsize;
+
+        // Average volume of pedestrian
+        if(volume > 0.1) {
+          carCount++;
+        }
+        else {
+          pedestrianCount++;
+        }
+      }
+
+      // Assign count values for cars and pedestrians
+      this.barData = [
+        {
+          "name": "Vehicles",
+          "value": carCount
+        },
+        {
+          "name": "Pedestrians",
+          "value": pedestrianCount
+        }
+      ];
+    }
+
+    // Obtain total object count for real time line graph
     this.objectCount = this.locationObjects.length;
+
+    // Conditional to check if new messages are coming through
+    if(this.pastTime == this.ds.Data.time) {
+      this.messageCounter++;
+    }
+    else {
+      this.messageCounter = 0;
+    }
+
+    if(this.messageCounter >= 10) {
+      this.objectCount = 0;
+    }
 
     // if(this.objectCount == 0)
     //   this.messageOutput = 'No data is currently being streamed.'
 
+    // Assign Real Time Total object count to line graph
     const objCountData =
     {
       "name": this.counter.toString(),
       //"value": this.ds.Data.objects.length
-      "value": this.locationObjects.length
+      "value": this.objectCount 
     }
     this.lineData[0].series.push(objCountData);
     this.lineData = [...this.lineData];
+
+    this.pastTime = this.ds.Data.time;
+
   }
 }

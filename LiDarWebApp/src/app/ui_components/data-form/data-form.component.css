@@ -1,13 +1,6 @@
 .centered {
-  position: absolute;
-  top: 38%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 25px;
-  padding-right: 25px;
-  }
+  margin: 0 auto;
+}
 
 label {
   display:flex;
@@ -27,9 +20,14 @@ select {
 }
 
 #rcorners {
-  background: rgb(0, 27, 148, 0.2);
-  width: 40%;
+  background: rgb(255, 255, 255, 0.5);
+  height: 55%;
+  width: 35%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 25px;
+  padding-right: 25px;
   border-radius: 15px;
-  border: 2px double black;
+  border: 1px double black;
   box-shadow: 5px 5px 2.5px grey;
 }

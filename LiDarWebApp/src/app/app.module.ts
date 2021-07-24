@@ -10,6 +10,7 @@ import { MqttSocketService } from './mqtt/mqttsocket.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './ui_components/header/header.component';
@@ -45,7 +46,8 @@ import { VisualizationsComponent } from './ui_components/visualizations/visualiz
     AppMaterialModule,
     BrowserAnimationsModule,
     NgxChartsModule,
-    ColorPickerModule
+    ColorPickerModule,
+    MatProgressSpinnerModule
   ],
   providers: [MqttSocketService],
   bootstrap: [AppComponent]
