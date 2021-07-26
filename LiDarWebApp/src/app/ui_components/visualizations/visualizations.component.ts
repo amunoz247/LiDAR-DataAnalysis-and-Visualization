@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MqttSocketService } from '@app/mqtt/mqttsocket.service';
 import { DataService } from '@app/data.service';
 import { PCD } from '@app/app.component';
@@ -18,21 +19,13 @@ export class VisualizationsComponent implements OnInit {
 
   pastTime: String;
   public messageCounter: number;
+  public selectedLocation: string = this.ds.selectedTopic;
 
   locationObjects: any;
   objectCount: Number = 0;
   messageOutput: String;
 
-  public barData = [
-    {
-      "name": "Vehicles",
-      "value": 0
-    },
-    {
-      "name": "Pedestrians",
-      "value": 0
-    }
-  ];
+  public barData = [];
 
   public lineData = [];
 
@@ -45,6 +38,7 @@ export class VisualizationsComponent implements OnInit {
   showYAxisLabel = true;
   xAxisBar = 'Object';
   yAxisBar = 'Count';
+  timeline: boolean = true;
   updateInterval: NodeJS.Timer;
   updateBar: NodeJS.Timer;
   counter = 1;
@@ -54,6 +48,7 @@ export class VisualizationsComponent implements OnInit {
   yAxisLine = 'Count';
 
   public layoutGap: string = '25px';
+  private breakpointObserver: BreakpointObserver;
 
   public barColorScheme = {
     domain: ['#9370DB', '#87CEFA', '#90EE90', '#9370DB', '#FA8072', '#FF7F50']
@@ -75,7 +70,42 @@ export class VisualizationsComponent implements OnInit {
     'width.px': 256
   }
 
-  constructor(private ds : DataService, private ms : MqttSocketService){
+  constructor(private ds : DataService, private ms : MqttSocketService, private bp: BreakpointObserver){
+
+    bp.observe([
+        Breakpoints.XSmall,
+    ]).subscribe((result: any) => {
+        if (result.matches) {
+            this.layoutGap = '8px';
+        }
+    });
+
+    bp.observe([
+        Breakpoints.Small,
+    ]).subscribe((result: any) => {
+        if (result.matches) {
+            this.layoutGap = '25px';
+        }
+    });
+
+    bp.observe([
+        Breakpoints.Medium,
+    ]).subscribe((result: any) => {
+        if (result.matches) {
+            this.layoutGap = '25px';
+        }
+    });
+
+    // this.barData = [
+    //   {
+    //     "name": "Vehicles",
+    //     "series": this.initLineChart()
+    //   },
+    //   {
+    //     "name": "Pedestrians",
+    //     "series": this.initLineChart()
+    //   }
+    // ];
 
     this.lineData = [{
       "name": "Objects",
@@ -135,10 +165,6 @@ export class VisualizationsComponent implements OnInit {
     this.containerStyle['width.px'] = this.flexLayoutContainerElement.nativeElement.clientWidth;
   }
 
-  initBarChart() {
-
-  }
-
   initLineChart() {
     const array = [];
     for (let i = 0; i < 100; i++) {
@@ -150,51 +176,12 @@ export class VisualizationsComponent implements OnInit {
     return array;
   }
 
-//   addObjectData() {
-//     let carCount = 0;
-//     let pedestrianCount = 0;
-// console.log('CountsRL: '+this.ds.Data.topic+' '+this.ds.selectedTopic);
-//     if(this.ds.Data.topic == this.ds.selectedTopic)
-//     {
-
-//     console.log('Counts: '+this.ds.Data.topic+' '+this.ds.selectedTopic);
-
-//     for(let i = 0; i < this.ds.Data.objects.length; i++) {
-//         let xsize = this.ds.Data.objects[i].maxx - this.ds.Data.objects[i].minx;
-//         let ysize = this.ds.Data.objects[i].maxy - this.ds.Data.objects[i].miny;
-//         let zsize = this.ds.Data.objects[i].maxz - this.ds.Data.objects[i].minz;
-
-//         let volume = xsize * ysize * zsize;
-
-//         // Average volume of pedestrian
-//         if(volume > 0.1) {
-//           carCount++;
-//         }
-//         else {
-//           pedestrianCount++;
-//         }
-//       }
-
-//     this.barData = [
-//     {
-//       "name": "Vehicles",
-//       "value": carCount
-//     },
-//     {
-//       "name": "Pedestrians",
-//       "value": pedestrianCount
-//     }
-//   ];
-// }
-//     console.log('Counts'+carCount+' '+pedestrianCount);
-//   }
-
   addRealTimeData() {
     // Create count variables for bar graph
     let carCount = 0;
     let pedestrianCount = 0;
 
-    // Increament Counter for Line graph and series to shift for each update
+    // Increament Counter for line graph and series to shift for each update
     this.counter++;
     this.lineData[0].series.shift();
 
@@ -220,7 +207,18 @@ export class VisualizationsComponent implements OnInit {
       }
 
       // Assign count values for cars and pedestrians
-      this.barData = [
+      // const objCountData = [
+      //   {
+      //     "name": this.counter.toString(),
+      //     "value": carCount
+      //   },
+      //   {
+      //     "name": this.counter.toString(),
+      //     "value": pedestrianCount
+      //   }
+      // ];
+
+      this.barData =  [
         {
           "name": "Vehicles",
           "value": carCount
@@ -230,7 +228,11 @@ export class VisualizationsComponent implements OnInit {
           "value": pedestrianCount
         }
       ];
+
+      // this.barData[0].series.push(objCountData);
+      this.barData = [...this.barData];
     }
+
 
     // Obtain total object count for real time line graph
     this.objectCount = this.locationObjects.length;
@@ -243,7 +245,7 @@ export class VisualizationsComponent implements OnInit {
       this.messageCounter = 0;
     }
 
-    if(this.messageCounter >= 10) {
+    if(this.messageCounter >= 30) {
       this.objectCount = 0;
     }
 
@@ -251,13 +253,13 @@ export class VisualizationsComponent implements OnInit {
     //   this.messageOutput = 'No data is currently being streamed.'
 
     // Assign Real Time Total object count to line graph
-    const objCountData =
+    const totalCountData =
     {
       "name": this.counter.toString(),
       //"value": this.ds.Data.objects.length
       "value": this.objectCount 
     }
-    this.lineData[0].series.push(objCountData);
+    this.lineData[0].series.push(totalCountData);
     this.lineData = [...this.lineData];
 
     this.pastTime = this.ds.Data.time;

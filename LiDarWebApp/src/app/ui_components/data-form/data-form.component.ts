@@ -20,13 +20,14 @@ export class DataFormComponent implements OnInit {
   formatList: any = ['.pcd','.pcap', '.gif']
   rangeList: any = ['1','2','3','4']
 
+  // Create the form group and set 
   explorerForm = new FormGroup({
     topic: new FormControl('', [Validators.required, Validators.minLength(3)]),
     stats: new FormControl('', Validators.required),
-    time: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    visualizationType: new FormControl('', Validators.required),
-    dataFormat: new FormControl('', Validators.required),
-    range: new FormControl('', Validators.required)
+    time: new FormControl(''),
+    visualizationType: new FormControl(''),
+    dataFormat: new FormControl(''),
+    range: new FormControl('')
   });
   
 

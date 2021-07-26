@@ -6,14 +6,31 @@
       </div>
 
       <div style="text-align:center">
-          <h2 class="text-secondary" style="padding: 20px">
+          <h2 class="text-secondary" style="padding: 10px; margin-bottom: 0;">
             Charts and Graphs 
           </h2>
+          <div class="grid-container">
+            <div class="item1" style="padding-top: 20px;">
+                <b>Current Sensor Location:</b> {{selectedLocation}}
+            </div>
+            <div class="item2"></div>
+            <div class="item3" *ngIf="objectCount == 0" style="align-items: right;">
+                <mat-spinner value="50" diameter="30" style="margin:0 auto; z-index: 100;"></mat-spinner>
+                <p>Waiting for data stream.</p>
+            </div>
+          </div>
 
-          <div *ngIf="objectCount == 0" style="align-items: right;">
+<!--           <div *ngIf="objectCount == 0" style="align-items: right;">
             <mat-spinner value="50" diameter="50" style="margin:0 auto; z-index: 100;"></mat-spinner>
             <p>Waiting for data stream.</p>
-          </div>
+          </div> -->
+
+<!--           <div class="grid-container">
+            <div class="item1">1</div>
+            <div class="item2">2</div>
+            <div class="item3">3</div>
+            <div class="item3">4</div>
+          </div> -->
 
     <div #flexLayoutContainer  style="position: relative; padding-left: 200px; padding-right: 200px;">
 
@@ -39,7 +56,7 @@
             </mat-card>
             
             <mat-card fxFlex="1 1 50%" class="align-header-center">
-              <h3><b>Real Time Stream of Total Objects Detected (per Second)</b></h3>
+              <h3><b>Count of Total Objects Detected (per Second)</b></h3>
               <div class="align-chart-right">
                 <ngx-charts-line-chart
                 [scheme]="lineColorScheme"

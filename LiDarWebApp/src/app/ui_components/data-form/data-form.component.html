@@ -2,113 +2,118 @@
 <!-- Contains main form to select/ customize visualizations -->
 
 <section class="hero is-primary is-bold">
-    <div class="hero-body"  id="page-container">
+    <div class="hero-body">
 
       <div class="header">
         <h1>Data Explorer</h1>
       </div>
 
       <div class="container" style="padding-top: 50px;">
-              <div class="content">
-              <div class="centered" id="rcorners">
+          <div class="content">
+          <div class="centered" id="rcorners">
 
-              <form class="border border-light p-5" [formGroup]="explorerForm" (ngSubmit)="submit()">
-                <h1 style="text-align: center;">Data Explorer Form</h1>
+          <form class="border border-light p-5" [formGroup]="explorerForm" (ngSubmit)="submit()">
+            <h1 style="text-align: center;">Data Explorer Form</h1>
 
-              <!-- Required Fields -->
-              <!-- #1 Select Sensor Location -->
-              <div class="form-group">
-                <mat-form-field>
-                  <mat-label for="topic">Select Sensor Location*</mat-label>
-                  <mat-select formControlName="topic" class="form-control">
-                    <mat-option *ngFor="let location of topicList" [value]="location">
-                      {{location}}
-                    </mat-option>
-                  </mat-select>
-                    <div *ngIf="f.topic.touched && f.topic.invalid" class="alert alert-danger">
-                        <div *ngIf="f.topic.errors.required">Sensor Location is required.</div>
-                    </div>
-                </mat-form-field>
-              </div>
-              <pre></pre>
+          <!-- Required Fields -->
+          <!-- #1 Select Sensor Location -->
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label for="topic">Select Sensor Location*</mat-label>
+              <mat-select formControlName="topic" class="form-control">
+                <mat-option *ngFor="let location of topicList" [value]="location">
+                  {{location}}
+                </mat-option>
+              </mat-select>
+                <div *ngIf="f.topic.touched && f.topic.invalid" class="alert alert-danger">
+                    <div *ngIf="f.topic.errors.required">Sensor Location is required.</div>
+                </div>
+            </mat-form-field>
+          </div>
+          <pre></pre>
 
-              <!-- #2 Select Data Statistical Analysis -->
-              <div class="form-group">
-                <mat-form-field >
-                  <mat-label for="stats">Select Statistics*</mat-label>
-                  <mat-select formControlName="stats" class="form-control">
-                    <mat-option *ngFor="let stat of statList" [value]="stat">
-                      {{stat}}
-                    </mat-option>
-                  </mat-select>
-                    <div *ngIf="f.stats.touched && f.stats.invalid" class="alert alert-danger">
-                        <div *ngIf="f.stats.errors.required">Data Statistics is required.</div>
-                    </div>
-                </mat-form-field>
-              </div>
-              <pre></pre>
+          <!-- #2 Select Data Statistical Analysis -->
+          <div class="form-group">
+            <mat-form-field >
+              <mat-label for="stats">Select Statistics*</mat-label>
+              <mat-select formControlName="stats" class="form-control">
+                <mat-option *ngFor="let stat of statList" [value]="stat">
+                  {{stat}}
+                </mat-option>
+              </mat-select>
+                <div *ngIf="f.stats.touched && f.stats.invalid" class="alert alert-danger">
+                    <div *ngIf="f.stats.errors.required">Data Statistics is required.</div>
+                </div>
+            </mat-form-field>
+          </div>
+          <pre></pre>
 
-              <!-- Future Inputs -->
-              <!-- #3 Select Time in Minutes -->
-              <div class="form-group">
-                <mat-form-field>
-                  <mat-label for="time">Select Time (Measured in Minutes Since the Top of the Hour)</mat-label>
-                  <mat-select formControlName="time" class="form-control">
-                    <mat-option *ngFor="let minute of timeSelect" [value]="minute">
-                      {{minute}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-              <pre></pre>
-              <!-- #4 Select Visualization Type -->
-              <div class="form-group">
-                <mat-form-field>
-                  <mat-label for="visualizationType">Select Visualization Type</mat-label>
-                  <mat-select formControlName="time" class="form-control">
-                    <mat-option *ngFor="let viz of vizList" [value]="viz">
-                      {{viz}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-              <pre></pre>
-              <!-- #5 Select Data File Format -->
-              <div class="form-group">
-                <mat-form-field>
-                  <mat-label for="stats">Select Data Format</mat-label>
-                  <mat-select formControlName="dataFormat" class="form-control">
-                    <mat-option *ngFor="let format of formatList" [value]="format">
-                      {{format}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-              <pre></pre>
-              <!-- #6 Select Range of View -->
-              <!--<h4>Range of View</h4>
-              <div class="form-group">
-                <mat-form-field appearance="fill">
-                  <mat-label for="stats">Select Range of View</mat-label>
-                  <mat-select formControlName="range" class="form-control">
-                    <mat-option *ngFor="let range of rangeList" [value]="range">
-                      {{range}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-              <pre></pre>-->
+          <!-- Future Inputs -->
+          <!-- #3 Select Time in Minutes -->
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label for="time">Select Time (Measured in Minutes Since the Top of the Hour)</mat-label>
+              <mat-select formControlName="time" class="form-control">
+                <mat-option *ngFor="let minute of timeSelect" [value]="minute">
+                  {{minute}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <pre></pre>
 
-      <div style="text-align: center">
-        <button mat-raised-button class="btn btn-primary" color="accent" type="submit">Submit</button>
+          <!-- #4 Select Visualization Type -->
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label for="visualizationType">Select Visualization Type</mat-label>
+              <mat-select formControlName="time" class="form-control">
+                <mat-option *ngFor="let viz of vizList" [value]="viz">
+                  {{viz}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <pre></pre>
+
+          <!-- #5 Select Data File Format -->
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label for="stats">Select Data Format</mat-label>
+              <mat-select formControlName="dataFormat" class="form-control">
+                <mat-option *ngFor="let format of formatList" [value]="format">
+                  {{format}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <pre></pre>
+
+          <!-- #6 Select Range of View -->
+          <!--<h4>Range of View</h4>
+          <div class="form-group">
+            <mat-form-field appearance="fill">
+              <mat-label for="stats">Select Range of View</mat-label>
+              <mat-select formControlName="range" class="form-control">
+                <mat-option *ngFor="let range of rangeList" [value]="range">
+                  {{range}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <pre></pre>-->
+
+          <!-- Submit Button Field -->
+          <div style="text-align: center">
+            <button mat-raised-button class="btn btn-primary" color="accent" type="submit" [disabled]="explorerForm.invalid">Submit</button>
+          </div>
+
+          <p style="color:red; padding-top: 2.5%;"><em>* = Required Field</em></p>
+          <p style="color:red; padding-top: 2.5%;"><em>Enter all Required Fields before proceeding.</em></p>
+
+          </form>
+          </div>
+          </div>
       </div>
-
-      <p style="color:red; padding-top: 2.5%;"><em>* = Required Field</em></p>
-
-    </form>
-    </div>
-    </div>
-    </div>
     </div>
 </section>
 
