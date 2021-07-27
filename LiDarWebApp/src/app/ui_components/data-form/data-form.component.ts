@@ -16,7 +16,7 @@ export class DataFormComponent implements OnInit {
   topicList: any = ['test15thVirginiaSE','test15thVirginiaNW', 'test']
   statList: any = ['Object Count']
   timeSelect: any = ['1','2','3','4']
-  vizList: any = ['Line Graph', 'Bar Chart', '3D Point Cloud Render']
+  vizList: any = ['Line Graph', 'Bar Chart', '3D Point Cloud Render', 'All']
   formatList: any = ['.pcd','.pcap', '.gif']
   rangeList: any = ['1','2','3','4']
 

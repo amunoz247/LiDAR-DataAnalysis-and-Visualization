@@ -1,3 +1,4 @@
+/* Grid Layout used at the top of the page to show the location and spinner */
 .grid-container {
   display: grid;
   grid-template-columns: auto auto auto;
@@ -51,6 +52,7 @@
   text-align:center;
 }
 
+/* Add shadow element to mat-card */
 .mat-card {
     box-shadow: 0.2em 0.2em 0.6em rgba(0,0,0,0.3);
 }

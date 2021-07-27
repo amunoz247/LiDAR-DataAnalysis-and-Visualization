@@ -128,7 +128,6 @@ export class VisualizationsComponent implements OnInit {
         // console.log(this);
         // console.log(value.payload);
         console.log(value.objects);
-        // var uncompressedPayload = Pako.inflate(value.payload, { to: 'string' });
         const compressed = new Uint8Array(value.payload);
         const uncompressedPayload = fzstd.decompress(compressed);
         console.log(uncompressedPayload);
@@ -136,8 +135,6 @@ export class VisualizationsComponent implements OnInit {
         console.log(string);
         this.parsedJSON = JSON.parse(string);
 
-        //var uncompressedPayload = Pako.inflate(value.payload);
-        //this.parsedJSON = BSON.deserialize(value.payload);
         console.log(this.parsedJSON.y.length);
         console.log(value.payload.length);
         if (app.pointCloud.length > 2){
