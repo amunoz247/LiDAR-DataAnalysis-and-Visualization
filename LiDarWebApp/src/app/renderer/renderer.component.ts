@@ -1,3 +1,12 @@
+/**************************************************************************
+ * Renderer Component
+ * Author: Andrew Munoz
+ * Date: June 2021
+ * Purpose: Renders the 3D point cloud mesh. Takes in data from the
+ * singleton DataService and uses the three.js library to render the
+ * points within a scene.
+ *************************************************************************/
+
 import { AfterViewInit, Component,  Input, ViewChild, ElementRef, ContentChild, NgZone } from '@angular/core';
 import { DataService } from '../data.service';
 import { Color, WebGLRenderer, PerspectiveCamera, BoxGeometry, BufferGeometry, Float32BufferAttribute, Points,
@@ -11,7 +20,7 @@ import * as STATS from 'stats-js';
   template: '<canvas #canvas></canvas>'
 })
 
-
+// Main Class
 export class RendererComponent implements AfterViewInit {
   private pcdScene: Scene;
   private pcamera: PerspectiveCamera;
@@ -22,6 +31,7 @@ export class RendererComponent implements AfterViewInit {
   @ViewChild( 'canvas' ) canvasReference: ElementRef;
   get canvas(): HTMLCanvasElement { return this.canvasReference.nativeElement; }
 
+  // Constructor builds three scene and camera
   constructor( private ds: DataService, readonly zone: NgZone ) {
     this.pcdScene = new Scene();
     this.pcamera = new PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
@@ -30,13 +40,19 @@ export class RendererComponent implements AfterViewInit {
   @Input() color: string | number | Color = 0x000000;
   @Input() alpha = 0;
   
+  // Main Function that implements on Init
   ngAfterViewInit()
   {
-
+    // Create Stats variable to run and show fps of app in upper left corner
     var stats = new STATS();
-    stats.showPanel( 1 );
-    document.body.appendChild( stats.dom );
+    var showStats = false; // Needs to be switched to true to make panel show in if statement below
 
+    if(showStats) {
+      stats.showPanel( 1 );
+      document.body.appendChild( stats.dom );
+    }
+
+    // Create three elements 
     var geometry = new BufferGeometry();
     var positions = new Array(80000 * 3);
     var colors = new Array(80000 * 3);
@@ -46,28 +62,24 @@ export class RendererComponent implements AfterViewInit {
     }
     
     if ( positions.length > 0 ) geometry.addAttribute( 'position', new Float32BufferAttribute( positions, 3 ) );
-    //if ( normal.length > 0 ) geometry.addAttribute( 'normal', new THREE.Float32BufferAttribute( normal, 3 ) );
     if ( colors.length > 0 ) geometry.addAttribute( 'color', new Float32BufferAttribute( colors, 3 ) );
 
-    // geometry.setAttribute('position', new Float32BufferAttribute(vertices, 3));
+    // Set three material, points, scene and camera elements to default values
     var material = new PointsMaterial( { size: this.ds.pointSizeValue, color: 0xffffff, vertexColors: true });
     this.pcdPoints = new Points( geometry, material );
     this.pcdScene.add( this.pcdPoints );
     this.pcdScene.background = new Color(0x000000);
 
-    //this.pcamera = new PerspectiveCamera(50, 4 / 3, .5, 1000); // camera
     this.pcamera.updateProjectionMatrix();
     this.pcamera.position.set(0, -25, 0);
-    //this.pcamera.lookAt(0, 0, 0);
     this.pcamera.lookAt( this.pcdScene.position );
 
-
+    // Set three renderer and controls
     this.renderer = new WebGLRenderer( { canvas: this.canvas, antialias: true, alpha: true } ); // render
     this.renderer.setPixelRatio( devicePixelRatio );
     this.renderer.setClearColor( this.color, this.alpha );
     this.renderer.setSize( window.innerWidth/2, window.innerHeight/2 );
     this.renderer.autoClear = true;
-    //document.getElementById('demo').appendChild(this.renderer.domElement);
 
     this.controls = new OrbitControls( this.pcamera, this.canvas );
     this.controls.autoRotate = false;
@@ -78,7 +90,7 @@ export class RendererComponent implements AfterViewInit {
     this.pcamera.position.x = 0;
     this.pcamera.position.z = 30;
 
-
+    // Function runs animate outside of Angular to not overload the app
     this.zone.runOutsideAngular( _ => 
     {
       const animate = () =>
@@ -87,6 +99,7 @@ export class RendererComponent implements AfterViewInit {
         requestAnimationFrame( animate );
         stats.begin();
 
+        // Checks that data is coming through and that the topic matches the selected topic
         if(this.ds.Data != null && this.ds.Data.topic == this.ds.selectedTopic) {
           console.log(this.ds.Data);
           console.log(this.ds.Data.topic + ' ' + this.ds.selectedTopic);
@@ -96,108 +109,35 @@ export class RendererComponent implements AfterViewInit {
 
         this.controls.update();
         this.render();
-                stats.end();
-
+        stats.end();
       };
       animate();
     } )
   }
+
+  // Function that updates the position and color of the points
   updateBuffer() { 
     var vertices = [];
     var vertX = this.ds.Data['x'];
     var vertY = this.ds.Data['y'];
     var vertZ = this.ds.Data['z'];
-    var intensity = this.ds.Data['intensity']; 
-    //console.log("vertx: ", this.ds.Data['x']);
+    var intensity = this.ds.Data['intensity'];
     const colorPicked = new Color(this.ds.colorValue);
     const positions = this.pcdPoints.geometry.attributes.position.array;
     const colors = this.pcdPoints.geometry.attributes.color.array;
 
-
     for ( var i=0; i < vertX.length; i++ ){
       this.pcdPoints.geometry.attributes.position.setXYZ(i, vertX[i], vertY[i], vertZ[i]);
-      // this.pcdPoints.geometry.attributes.color.setXYZ(i, 255, 0, 0); // Red Point Clouds
-      // this.pcdPoints.geometry.attributes.color.setXYZ(i, 0, 255, 0); // Green Point Clouds
-      // this.pcdPoints.geometry.attributes.color.setXYZ(i, 0, 0, 255); // Blue Point Clouds
       this.pcdPoints.geometry.attributes.color.setXYZ(i, colorPicked.r, colorPicked.g, colorPicked.b);
-      //vertices.push(vertX[i], vertY[i], vertZ[i]);
     }
 
-    // for(var index = 0; index < vertices.length; index++) {
-    //   positions[index] = vertices[index];
-    //   this.pcdPoints.geometry.attributes.color.array[index] = colors[index];
-    //   if(isNaN(positions[index]))
-    //   console.log(positions[index])
-    // }
-
-    // if(vertices.length < this.pcdPoints.geometry.drawRange.count && isFinite(this.pcdPoints.geometry.drawRange.count)) {
-    //   //console.log(mesh.geometry.drawRange.count);
-    //   for(var index = vertices.length; index < this.pcdPoints.geometry.drawRange.count; index++) {
-    //     this.pcdPoints.geometry.attributes.position.array[index] = 0;
-    //     //this.pcdPoints.geometry.attributes.color.array[index] = 0;
-    //   }
-    // }
-
-    //console.log(position.length/3.0);
-    //console.log(mesh.geometry);
     this.pcdPoints.geometry.attributes.position.needsUpdate = true;
     this.pcdPoints.geometry.attributes.color.needsUpdate = true;
     this.pcdPoints.geometry.setDrawRange(0, vertX.length*3);
     this.pcdPoints.geometry.computeBoundingSphere();
-    //console.log(this.pcdPoints.geometry);
     console.log(this.ds.Data['x'].length);
   }
+
+  // Call to render function which renders the main scene
   render() { console.log('Render is being called'); this.renderer.render( this.pcdScene, this.pcamera ); }
 }
-
-
-
-/***************Test Code that renders rotating cube into scene using THREE.js***************/
-
-/*export class RendererComponent
-{
-  private renderer: WebGLRenderer;
-  private pcamera: PerspectiveCamera;
-  private cubeScene: Scene;
-  @ViewChild( 'canvas' ) canvasReference: ElementRef;
-  get canvas(): HTMLCanvasElement { return this.canvasReference.nativeElement; }
-
-  constructor( readonly zone: NgZone ) {}
-
-  @Input() color: string | number | Color = 0xffffff;
-  @Input() alpha = 0;
-  
-  ngAfterViewInit()
-  {
-    this.cubeScene = new Scene();
-    this.pcamera = new PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
-    this.renderer = new WebGLRenderer( { canvas: this.canvas, antialias: true, alpha: true } );
-    this.renderer.setPixelRatio( devicePixelRatio );
-    //this.renderer.setClearColor( this.color, this.alpha );
-    this.renderer.setSize( window.innerWidth/2, window.innerHeight/2 );
-    this.renderer.autoClear = true;
-
-    var geometry = new BoxGeometry( 1, 1, 1 );
-    var material = new MeshBasicMaterial( { color: 0x00ff00 } );
-    var cube = new Mesh( geometry, material );
-    //this.cubeScene.add( cube );
-        this.cubeScene.background = new Color(0x000000);
-
-
-    this.pcamera.position.z = 5;
-
-
-    this.zone.runOutsideAngular( _ => 
-    {
-      const animate = () =>
-      {
-        requestAnimationFrame( animate );
-          // cube.rotation.x += 0.01;
-          // cube.rotation.y += 0.01;
-          this.render();
-      };
-      animate();
-    } )
-  }
-  render() { console.log('Hello Im working'); this.renderer.render( this.cubeScene, this.pcamera ); }
-}*/
