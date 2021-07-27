@@ -31,12 +31,9 @@ export class SettingsComponent implements OnInit {
   }
 
   colorPicker(value: string) {
-    //if(this.selectedColor != null) {
-      this.selectedColor = value;
-      this.color2 = numberToHex(this.colorMap.get(this.selectedColor));
-      console.log("test");
-
-    //}
+    this.selectedColor = value;
+    this.color2 = numberToHex(this.colorMap.get(this.selectedColor));
+    console.log("test");
   }
 
   setChanges() {
@@ -47,6 +44,14 @@ export class SettingsComponent implements OnInit {
     this.ds.colorValue = hexToNumber(this.color2);//this.color;//this.colorMap.get(this.selectedColor);
     this.ds.pointSizeValue = this.selectedPointSize;
     this.router.navigateByUrl('/visualizations');
+  }
+
+  clickCancel() {
+    console.log("Changes Cancelled");
+    // Route back to settings page and reset the page
+    this.router.navigateByUrl('/settings').then(() => { 
+      window.location.reload(); 
+    });;
   }
 }
 

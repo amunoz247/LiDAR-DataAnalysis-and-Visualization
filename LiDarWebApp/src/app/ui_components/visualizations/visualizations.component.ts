@@ -215,6 +215,23 @@ export class VisualizationsComponent implements OnInit {
       //   }
       // ];
 
+      // Obtain total object count for real time line graph
+      this.objectCount = this.locationObjects.length;
+
+      // Conditional to check if new messages are coming through
+      if(this.pastTime == this.ds.Data.time) {
+        this.messageCounter++;
+      }
+      else {
+        this.messageCounter = 0;
+      }
+
+      if(this.messageCounter >= 30) {
+        this.objectCount = 0;
+        carCount = 0;
+        pedestrianCount = 0;
+      }
+
       this.barData =  [
         {
           "name": "Vehicles",
@@ -227,23 +244,7 @@ export class VisualizationsComponent implements OnInit {
       ];
 
       // this.barData[0].series.push(objCountData);
-      this.barData = [...this.barData];
-    }
-
-
-    // Obtain total object count for real time line graph
-    this.objectCount = this.locationObjects.length;
-
-    // Conditional to check if new messages are coming through
-    if(this.pastTime == this.ds.Data.time) {
-      this.messageCounter++;
-    }
-    else {
-      this.messageCounter = 0;
-    }
-
-    if(this.messageCounter >= 30) {
-      this.objectCount = 0;
+      //this.barData = [...this.barData];
     }
 
     // if(this.objectCount == 0)

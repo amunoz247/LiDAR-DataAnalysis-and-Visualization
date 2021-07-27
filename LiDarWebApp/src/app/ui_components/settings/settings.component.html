@@ -2,7 +2,7 @@
 <!-- Contains options to change point cloud colorand size. -->
 <!---- Additionally, allows for user to change the theme. --->
 <section class="hero is-primary is-bold">
-  <!-- <div class="hero-body"  id="page-container"> -->
+  <!-- <div class="hero-body"  id="page-container"> --> <!--Line to make page fit length of content if longer than window view. Not necessary at present state-->
     <div class="hero-body">
     <div class="header">
       <h1>Settings</h1>
@@ -55,17 +55,21 @@
                 <mat-radio-button class="radio-button" color="warn" value="3">Warn</mat-radio-button>
               </mat-radio-group>
             </section>
+            <p style="color:red; padding-left: 20px;"><em>Coming Soon - Feature will be added in a future update.</em></p>
 
-<!--             <section class="button-group">
+            <!--<section class="button-group">
               <label class="radio-button"><b>Enable Dark Mode:</b></label>
                 <mat-slide-toggle color="primary"></mat-slide-toggle> 
             </section> -->
               
             <div style="padding: 10px;"></div>
 
+          <!-- Submit and Cancel Buttons -->
           <div style="text-align: center; border-top: 1px solid #aaaaaa; padding-top: 20px;">
             <p>Saves changes and goes back to Dashboard.</p>
-            <button mat-raised-button class="btn btn-primary" color="accent" (click)="setChanges();"><i class="fa fa-plus"></i>Set Settings</button>
+            <button style="margin-right: 20px;" mat-raised-button class="btn btn-primary" color="accent" (click)="setChanges();"><i class="fa fa-plus"></i>Set Settings</button>
+
+            <button mat-raised-button class="btn btn-primary" color="white" (click)="clickCancel();"><i class="fa fa-plus"></i>Cancel</button>
           </div>
       </div>
 
