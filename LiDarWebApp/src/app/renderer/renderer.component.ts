@@ -121,14 +121,39 @@ export class RendererComponent implements AfterViewInit {
     var vertX = this.ds.Data['x'];
     var vertY = this.ds.Data['y'];
     var vertZ = this.ds.Data['z'];
+    var boundBox = this.ds.Data['objects'];
     var intensity = this.ds.Data['intensity'];
-    const colorPicked = new Color(this.ds.colorValue);
+    const colorPicked = new Color(this.ds.colorValue); // Color for entire scene
+    const carColorP = new Color(this.ds.carColor); // Color for Cars
+    const pedColorP = new Color(this.ds.pedestrianColor); // Color for Pedestrians
     const positions = this.pcdPoints.geometry.attributes.position.array;
     const colors = this.pcdPoints.geometry.attributes.color.array;
 
     for ( var i=0; i < vertX.length; i++ ){
       this.pcdPoints.geometry.attributes.position.setXYZ(i, vertX[i], vertY[i], vertZ[i]);
       this.pcdPoints.geometry.attributes.color.setXYZ(i, colorPicked.r, colorPicked.g, colorPicked.b);
+      
+      // Additional Loop to check for cars and pedestrians to set/change color of each
+      for( var j=0; j < boundBox.length; j++) {
+        if(boundBox[j]['minx'] < vertX[i] && boundBox[j]['maxx'] > vertX[i] 
+          && boundBox[j]['miny'] < vertY[i] && boundBox[j]['maxy'] > vertY[i] 
+          && boundBox[j]['minz'] < vertZ[i] && boundBox[j]['maxz'] > vertZ[i]) {
+
+          let xsize = this.ds.Data.objects[j].maxx - this.ds.Data.objects[j].minx;
+          let ysize = this.ds.Data.objects[j].maxy - this.ds.Data.objects[j].miny;
+          let zsize = this.ds.Data.objects[j].maxz - this.ds.Data.objects[j].minz;
+
+          let volume = xsize * ysize * zsize;
+
+          // Average volume of pedestrian
+          if(volume > 0.1) {
+            this.pcdPoints.geometry.attributes.color.setXYZ(i, carColorP.r, carColorP.g, carColorP.b);
+          }
+          else {
+            this.pcdPoints.geometry.attributes.color.setXYZ(i, pedColorP.r, pedColorP.g, pedColorP.b);
+          }
+        }
+      }
     }
 
     this.pcdPoints.geometry.attributes.position.needsUpdate = true;

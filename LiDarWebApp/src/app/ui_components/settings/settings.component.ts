@@ -10,10 +10,14 @@ import { DataService } from '@app/data.service';
 export class SettingsComponent implements OnInit {
 
   selectedColor: string;
+  selectedCarColor: string;
+  selectedPedColor: string;
   selectedPointSize: Number;
   colors: string[] = ['Red (Default)', 'Green', 'Blue'];
   color: Number;
   color2: string = "rgb(0,0,255)";
+  colorCar: string = "rgb(0,0,255)";
+  colorPed: string = "rgb(0,0,255)";
   colorFormat: string = 'rgb'
   colorMap: Map<string, number> = new Map<string, number>([
     ["Red (Default)", 0xFF0000 ],
@@ -26,6 +30,8 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     this.color2 = numberToHex(this.ds.colorValue);
     console.log(this.color2);
+    this.colorCar = numberToHex(this.ds.carColor);
+    this.colorPed = numberToHex(this.ds.pedestrianColor);
     //this.selectedColor = this.colors[0];
     this.selectedPointSize = this.ds.pointSizeValue;
   }
@@ -36,12 +42,24 @@ export class SettingsComponent implements OnInit {
     console.log("test");
   }
 
+  // carColorPick(value: string) {
+  //   this.selectedCarColor = value;
+  //   this.colorCar = numberToHex(this.colorMap.get(this.selectedCarColor));
+  // }
+
+  // pedColorPicker(value: string) {
+  //   this.selectedPedColor = value;
+  //   this.colorPed = numberToHex(this.colorMap.get(this.selectedPedColor));
+  // }
+
   setChanges() {
     console.log("Settings Updated");
     console.log(parseInt(this.color2.substr(1)));
     console.log(hexToNumber(this.color2));
 
     this.ds.colorValue = hexToNumber(this.color2);//this.color;//this.colorMap.get(this.selectedColor);
+    this.ds.carColor = hexToNumber(this.colorCar);
+    this.ds.pedestrianColor = hexToNumber(this.colorPed);
     this.ds.pointSizeValue = this.selectedPointSize;
     this.router.navigateByUrl('/visualizations');
   }

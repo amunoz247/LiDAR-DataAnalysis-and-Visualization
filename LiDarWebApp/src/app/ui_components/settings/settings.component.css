@@ -12,6 +12,13 @@
   height: 60px;
 }
 
+.color-wheel-group {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 20px;
+}
+
 /* Button Margin */
 .radio-button {
   margin: 5px;

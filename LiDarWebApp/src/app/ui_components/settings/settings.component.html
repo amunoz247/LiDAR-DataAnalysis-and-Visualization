@@ -24,16 +24,53 @@
             </mat-radio-group>
           </section>
 
-          <section class="button-group">
-            <label class="radio-button" style="padding: 20px;"><i>Color Wheel:</i></label>
+          <section class="color-wheel-group">
+            <div style="padding: 12px;"></div>
             <input [(colorPicker)]="color2"  [style.background]="color2"/>
-            <div style="padding-left: 20px;">Selected HEX Color Value: {{color2}}</div>
+            <div style="padding-left: 10px;">HEX Value: {{color2}}</div>
           </section>
 
-          <p style="color:red; padding-left: 20px;"><em>*Note: If Red, Green, or Blue button is selected the color wheel will be updated to match the selection.</em></p>
+ <!--          <section class="button-group">
+            <label class="radio-button" style="padding: 10px;"><i>Color Wheel:</i></label>
+            <input [(colorPicker)]="color2"  [style.background]="color2"/>
+            <div style="padding-left: 10px;">Selected HEX Color Value: {{color2}}</div>
+          </section> -->
+          <div style="padding: 10px;"></div>
+          <p style="color:red; padding-left: 20px;"><em>*Note: If the Red, Green, or Blue button is selected the color wheel will be updated to match the selection.</em></p>
 
           <!--<div class="radio-button">Your selected color is: {{selectedColor}} </div>
           <div style="padding: 10px"></div>-->
+
+          <!-- Select Color for Vehicles Detected -->
+          <section class="button-group">
+            <label class="radio-button"><b>Change Color of Detected Objects:</b></label>
+          </section>
+
+          <section class="color-wheel-group">
+            <label class="radio-button" style="padding: 20px;"><i>Car:</i></label>
+          </section>
+
+          <section class="color-wheel-group">
+            <div style="padding: 12px;"></div>
+            <input [(colorPicker)]="colorCar"  [style.background]="colorCar"/>
+            <div style="padding-left: 10px;">HEX Value: {{colorCar}}</div>
+          </section>
+
+          <div style="padding: 10px;"></div>
+
+
+          <!-- Select Color for Pedestrians Detected -->
+          <section class="color-wheel-group">
+            <label class="radio-button" style="padding: 20px;"><i>Pedestrian:</i></label>
+          </section>
+
+          <section class="color-wheel-group">
+            <div style="padding: 12px;"></div>
+            <input [(colorPicker)]="colorPed"  [style.background]="colorPed"/>
+            <div style="padding-left: 10px;">HEX Value: {{colorPed}}</div>
+          </section>
+
+          <div style="padding: 10px;"></div>
 
           <section class="button-group">
             <label class="radio-button"><b>Change Point Cloud Size:</b></label>

@@ -10,6 +10,8 @@ export class DataService {
 
   public Data : PCD;
   public colorValue : Number;
+  public carColor: Number;
+  public pedestrianColor: Number;
   public pointSizeValue: Number;
 
   topicURL : string = 'http://localhost:5000/topics';
@@ -17,6 +19,8 @@ export class DataService {
 
   constructor(private http: HttpClient) { 
     this.colorValue = 0xFF0000;
+    this.carColor = 0xFF0000;
+    this.pedestrianColor = 0xFF0000;
     this.pointSizeValue = 0.5;
   }
 
