@@ -18,7 +18,7 @@
             </div>
             <div class="item2"></div>
             <div class="item3" *ngIf="objectCount == 0" style="align-items: right;">
-                <mat-spinner value="50" diameter="30" style="margin:0 auto; z-index: 100;"></mat-spinner>
+                <mat-spinner value="50" diameter="25" style="margin:0 auto; z-index: 100;"></mat-spinner>
                 <p>Loading...No objects detected.</p>
             </div>
           </div>
@@ -43,7 +43,7 @@
                 [yAxisLabel]="yAxisBar"
                 (select)="onSelect($event)">
                 </ngx-charts-bar-vertical>
-                <div *ngIf="objectCount == 0" style="padding-left: 20px;">No Data.</div>
+                <div *ngIf="objectCount == 0" >No Data Found.</div>
               </div>
             </mat-card>
             

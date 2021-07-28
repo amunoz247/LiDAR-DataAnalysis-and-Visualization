@@ -14,22 +14,29 @@ import * as fzstd from 'fzstd';
 export class VisualizationsComponent implements OnInit {
   @ViewChild('flexLayoutContainer') flexLayoutContainerElement: ElementRef;
 
+  // Create Point Cloud and JSON Array to store and pass incoming data from backend to front end dataservice
   public pointCloud : PCD[] = [];
   parsedJSON: any;
 
+  // Create time and message count variables
   pastTime: String;
   public messageCounter: number;
+
+  // Get Selected Topic from the dataservice
   public selectedLocation: string = this.ds.selectedTopic;
 
+  // Additional Variables to store object information
   locationObjects: any;
   objectCount: Number = 0;
+  carCount: number = 0;
+  pedestrianCount: number = 0;
   messageOutput: String;
 
+  // Initialize Chart Arrays
   public barData = [];
-
   public lineData = [];
 
-  // options for the chart
+  // Initialize Options for the charts
   showXAxis = true;
   showYAxis = true;
   gradient = false;
@@ -43,13 +50,17 @@ export class VisualizationsComponent implements OnInit {
   updateBar: NodeJS.Timer;
   counter = 1;
 
-  // axis labels for line chart
+  // Axis labels for line chart
   xAxisLine = 'Seconds';
   yAxisLine = 'Count';
 
+  // Gap for between the charts/material cards
   public layoutGap: string = '25px';
+
+  // Observer to resize items when window resized
   private breakpointObserver: BreakpointObserver;
 
+  // Color Schemes for both charts
   public barColorScheme = {
     domain: ['#9370DB', '#87CEFA', '#90EE90', '#9370DB', '#FA8072', '#FF7F50']
   };
@@ -58,10 +69,10 @@ export class VisualizationsComponent implements OnInit {
     domain: ['#FA8072', '#90EE90', '#FF7F50', '#9370DB', '#9370DB', '#87CEFA']
   };
 
-
   // Table Headers to be displayed on Webpage
   headers = ["time", "topic", "x", "y", "z", "intensity"]
 
+  // Stores general height and width of items
   public elementStyle: object = {
     'height.px': 20
   };
@@ -113,7 +124,6 @@ export class VisualizationsComponent implements OnInit {
     }];
 
     this.updateInterval = setInterval(() => this.addRealTimeData(), 2000);
-    // this.updateBar = setInterval(() => this.addObjectData(), 2000);
   }
 
 
@@ -174,9 +184,9 @@ export class VisualizationsComponent implements OnInit {
   }
 
   addRealTimeData() {
-    // Create count variables for bar graph
-    let carCount = 0;
-    let pedestrianCount = 0;
+    // Set Car and Pedestrian Counts
+    this.carCount = 0;
+    this.pedestrianCount = 0;
 
     // Increament Counter for line graph and series to shift for each update
     this.counter++;
@@ -196,10 +206,10 @@ export class VisualizationsComponent implements OnInit {
 
         // Average volume of pedestrian
         if(volume > 0.1) {
-          carCount++;
+          this.carCount++;
         }
         else {
-          pedestrianCount++;
+          this.pedestrianCount++;
         }
       }
 
@@ -210,45 +220,44 @@ export class VisualizationsComponent implements OnInit {
       //     "value": carCount
       //   },
       //   {
-      //     "name": this.counter.toString(),
-      //     "value": pedestrianCount
+      //     "name2": this.counter.toString(),
+      //     "value2": pedestrianCount
       //   }
       // ];
 
-      // Obtain total object count for real time line graph
-      this.objectCount = this.locationObjects.length;
+      // this.barData[0].series.push(objCountData);
+      // this.barData = [...this.barData];
 
-      // Conditional to check if new messages are coming through
-      if(this.pastTime == this.ds.Data.time) {
-        this.messageCounter++;
-      }
-      else {
-        this.messageCounter = 0;
-      }
-
-      if(this.messageCounter >= 30) {
-        this.objectCount = 0;
-        carCount = 0;
-        pedestrianCount = 0;
-      }
-
+      // Pass in count values to bar chart
       this.barData =  [
         {
           "name": "Vehicles",
-          "value": carCount
+          "value": this.carCount
         },
         {
           "name": "Pedestrians",
-          "value": pedestrianCount
+          "value": this.pedestrianCount
         }
       ];
-
-      // this.barData[0].series.push(objCountData);
-      //this.barData = [...this.barData];
     }
 
-    // if(this.objectCount == 0)
-    //   this.messageOutput = 'No data is currently being streamed.'
+    // Obtain total object count for real time line graph
+    this.objectCount = this.locationObjects.length;
+
+    // Conditional to check if new messages are coming through
+    if(this.pastTime == this.ds.Data.time) {
+      this.messageCounter++;
+    }
+    else {
+      this.messageCounter = 0;
+    }
+
+    // If no messages are coming through then set counts to 0
+    if(this.messageCounter >= 30) {
+      this.objectCount = 0;
+      this.carCount = 0;
+      this.pedestrianCount = 0;
+    }
 
     // Assign Real Time Total object count to line graph
     const totalCountData =
