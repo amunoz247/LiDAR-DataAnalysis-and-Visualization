@@ -64,6 +64,7 @@ def parse_header(lines):
         if not match:
             warnings.warn("warning: can't understand line: %s" % ln)
             continue
+        # Check for each key found in the header 
         key, value = match.group(1).lower(), match.group(2)
         if key == 'version':
             metadata[key] = value
@@ -163,10 +164,10 @@ def read_pcd(content, isfilename=False):
             # TODO what to use as second argument? if buf is None
             # (compressed > uncompressed)
             # should we read buf as raw binary?
-            #buf = lzf.decompress(compressed_data, uncompressed_size)
             if len(buf) != uncompressed_size:
                 raise Exception('Error decompressing data')
-            # the data is stored field-by-field
+            
+            # Data is stored field-by-field
             pc_data = np.zeros(metadata['width'], dtype=dtype)
             ix = 0
             for dti in range(len(dtype)):
@@ -223,7 +224,8 @@ def read_pcd(content, isfilename=False):
             #buf = lzf.decompress(compressed_data, uncompressed_size)
             if len(buf) != uncompressed_size:
                 raise Exception('Error decompressing data')
-            # the data is stored field-by-field
+            
+            # Data is stored field-by-field
             pc_data = np.zeros(metadata['width'], dtype=dtype)
             ix = 0
             for dti in range(len(dtype)):
@@ -232,6 +234,8 @@ def read_pcd(content, isfilename=False):
                 column = np.fromstring(buf[ix:(ix + bytes)], dt)
                 pc_data[dtype.names[dti]] = column
                 ix += bytes
+    
+    # Pass in parsed point cloud data to pandas dataframe
     df = pd.DataFrame(pc_data)
 
     # Create color string and check if dataframe contains color info

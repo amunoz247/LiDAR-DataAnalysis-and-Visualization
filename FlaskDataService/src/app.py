@@ -41,22 +41,23 @@ Message is threaded and passed into read_pcd function to be parsed
 and cleaned. Passes cleaned data to data[]."""
 def process_message():
     global lock
+
+    # Set lock while message is being processed
     while True:
-        print("hello world")
-        # print(threadedData.empty())
         lock.acquire()
-        print("LENGTH!!!!! " + str(len(threadedData)))
         if len(threadedData) > 0:
-            print("hello world 2")
+            # Pass message to data[]
             data = threadedData[0]
             del threadedData[0]
+
+            # Release Threading Lock and pass data to parser
             lock.release()
-            # data = threadedData.get()
             values = read_pcd( data['payload'])
+
+            # Compress and store the data and track time of compression
             start = datetime.datetime.now()
             data['payload'] = zstd.compress(bytes(values['points'], 'utf-8'))
             stop = (datetime.datetime.now()-start).total_seconds()
-            print(stop)
             data['objects'] = values['objects']
             data['time'] = values['time']
 
@@ -64,7 +65,6 @@ def process_message():
             socketio.emit('mqtt_message', data=data)
 
         else:
-            print('test')
             lock.release()
         time.sleep(.1)
 
@@ -126,9 +126,7 @@ def count_fps_datamesh(timeValue, topicValue):
     else:
         duration = (datetime.datetime.now() - startTime).total_seconds()
     if timeValue <= duration:
-        #startTime = datetime.datetime.now()
         fpsDict[topicValue] = countDict[topicValue] / duration
-        #countDict[topicValue] = 0
         print(fpsDict)
 
 
@@ -168,7 +166,6 @@ def handle_mqtt_message(client, userdata, message):
     lock.acquire()
     if len(threadedData) < 100:
         threadedData.append(data)
-        print('whatever')
     lock.release()
  
 # MQTT function that handles MQTT logging functionality   
@@ -190,10 +187,3 @@ if __name__ == '__main__':
 
     # Keep reloader set to false otherwise this will create two Flask instances.
     socketio.run(app, host='0.0.0.0', port=5000, use_reloader=False, debug=False)
-
-    # try:
-    #     while True:
-    #         pass      
-    # except (KeyboardInterrupt, SystemExit):
-    #     print('Program was Interrupted through Manual Input. Exiting Program ...')
-    #     sys.exit(0)
