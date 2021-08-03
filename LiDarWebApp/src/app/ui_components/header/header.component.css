@@ -1,9 +1,10 @@
-
+/* Adds black outline to text in the navigation bar */
 #text-outline{
     -webkit-text-stroke-width: 0.5px;
     -webkit-text-stroke-color: black;
 }
 
+/* Adds shadow under the navigation bar */
 .mat-toolbar {
     position: relative;
     z-index: 5;

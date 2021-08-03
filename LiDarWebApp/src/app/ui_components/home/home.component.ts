@@ -1,3 +1,4 @@
+/* Home Page Component */
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -13,6 +14,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // Routes center button to the Data Explorer Form
   btnClick() {
     this.router.navigateByUrl('/data-form');
   }

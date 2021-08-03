@@ -1,10 +1,4 @@
 /* Button Group for Data Appearance */
-/*.radio-group {
-  display: flex;
-  flex-direction: column;
-  margin: 15px 0;
-}*/
-
 .button-group {
   display: flex;
   align-content: center;
@@ -12,6 +6,7 @@
   height: 60px;
 }
 
+/* Color Picker Styling */
 .color-wheel-group {
   display: flex;
   align-content: center;
@@ -24,16 +19,18 @@
   margin: 5px;
 }
 
-
+/* Set Size and border for section headers */
 h2 {
   font-size:  1.5em;
   border-bottom: 1px solid #aaaaaa;
 }
 
+/* Add additional padding to material groups */
 mat-radio-group, mat-slide-toggle {
   padding: 20px;
 }
 
+/* Adds padding to content container */
 .container {
     padding: 40px;
 }

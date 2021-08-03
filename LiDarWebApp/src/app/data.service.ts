@@ -29,7 +29,7 @@ export class DataService {
     this.pointSizeValue = 0.5;
   }
 
-  // Function to return topic
+  // Function to return initial topic from the backend
   getTopic(): Observable<string[]>{
     return this.http.get<string[]>(this.topicURL)
   }

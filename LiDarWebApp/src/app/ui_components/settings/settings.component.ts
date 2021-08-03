@@ -1,3 +1,5 @@
+/* Settings Page Component.
+  Sets initial variables for color and size selection */
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '@app/data.service';
@@ -9,10 +11,13 @@ import { DataService } from '@app/data.service';
 })
 export class SettingsComponent implements OnInit {
 
+  // Init selected variables
   selectedColor: string;
   selectedCarColor: string;
   selectedPedColor: string;
   selectedPointSize: Number;
+
+  // Init default variables
   colors: string[] = ['Red (Default)', 'Green', 'Blue'];
   color: Number;
   color2: string = "rgb(0,0,255)";
@@ -28,6 +33,7 @@ export class SettingsComponent implements OnInit {
   constructor(private router: Router, private ds: DataService) { }
 
   ngOnInit(): void {
+    // Initializes selections to default values
     this.color2 = numberToHex(this.ds.colorValue);
     console.log(this.color2);
     this.colorCar = numberToHex(this.ds.carColor);
@@ -36,22 +42,14 @@ export class SettingsComponent implements OnInit {
     this.selectedPointSize = this.ds.pointSizeValue;
   }
 
+  // Function to set color picker value
   colorPicker(value: string) {
     this.selectedColor = value;
     this.color2 = numberToHex(this.colorMap.get(this.selectedColor));
     console.log("test");
   }
 
-  // carColorPick(value: string) {
-  //   this.selectedCarColor = value;
-  //   this.colorCar = numberToHex(this.colorMap.get(this.selectedCarColor));
-  // }
-
-  // pedColorPicker(value: string) {
-  //   this.selectedPedColor = value;
-  //   this.colorPed = numberToHex(this.colorMap.get(this.selectedPedColor));
-  // }
-
+  // Button to set changes to scene
   setChanges() {
     console.log("Settings Updated");
     console.log(parseInt(this.color2.substr(1)));
@@ -64,6 +62,7 @@ export class SettingsComponent implements OnInit {
     this.router.navigateByUrl('/visualizations');
   }
 
+  // Button to cancel changes and revert back to default values
   clickCancel() {
     console.log("Changes Cancelled");
     // Route back to settings page and reset the page

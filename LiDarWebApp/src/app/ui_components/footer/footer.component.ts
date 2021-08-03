@@ -1,3 +1,4 @@
+/* App Footer Component */
 import { Component, OnInit } from '@angular/core';
 
 @Component({

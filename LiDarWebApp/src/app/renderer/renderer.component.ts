@@ -47,6 +47,7 @@ export class RendererComponent implements AfterViewInit {
     var stats = new STATS();
     var showStats = false; // Needs to be switched to true to make panel show in if statement below
 
+    // Conditional to show stats panel in upper left corner of browser window
     if(showStats) {
       stats.showPanel( 1 );
       document.body.appendChild( stats.dom );
@@ -87,6 +88,7 @@ export class RendererComponent implements AfterViewInit {
     this.controls.enablePan = true;
     this.controls.update();
 
+    // Reset Camera position after controls update
     this.pcamera.position.x = 0;
     this.pcamera.position.z = 30;
 

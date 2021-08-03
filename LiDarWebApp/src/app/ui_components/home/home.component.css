@@ -1,3 +1,4 @@
+/* Sets background image for home page */
 .hero {
   background-image: url('/assets/imgs/reno_bg_image.jpg') !important;
   height: 950px;
@@ -7,19 +8,14 @@
   background-size: cover;
 }
 
-/*.center {
-       display: flex;
-       height: 300px;
-       background: rgb(51, 153, 255, 0.3);
-       justify-content: center;
-       align-items: center;
-     }*/
+/* Sets content to center and text to white */
 .container {
   text-align: center;
   color: white;
   margin: 0;
 }
 
+/* Centers items to absolute center of the screen */
 .centered {
   position: absolute;
   top: 50%;
@@ -31,6 +27,7 @@
   padding-right: 20px;
 }
 
+/* Adds rounded corners */
 #rcorners {
   background: rgb(61, 81, 181, 0.8);
   border-radius: 15px;
@@ -39,6 +36,7 @@
               0.3em 0.3em 1em rgba(0,0,0,0.3);
 }
 
+/* Gives text black outline */
 #text-outline{
   -webkit-text-stroke-width: 0.5px;
   -webkit-text-stroke-color: black;

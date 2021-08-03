@@ -1,3 +1,5 @@
+/* Data Explorer Form Component
+  Initializes Form group used and sets lists for selection. */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient, HttpResponse } from '@angular/common/http';
@@ -33,6 +35,7 @@ export class DataFormComponent implements OnInit {
 
   constructor(private ds : DataService, private ms : MqttSocketService, private router: Router) { }
 
+  // Gets topic from topic list file on the backend
   ngOnInit(): void {
     this.ds.getTopic().subscribe(topicList => {this.topicList = topicList});
   }
@@ -41,12 +44,11 @@ export class DataFormComponent implements OnInit {
     return this.explorerForm.controls;
   }
   
+  // Submit button function that sets values from form and navigates to dashboard upon completion
   submit(){
     console.log("Data Explorer Form Submitted");
-    console.log(this.explorerForm.value.topic);
     this.ds.selectedTopic = this.explorerForm.value.topic;
     this.router.navigateByUrl('/visualizations');
   }
-
 
 }

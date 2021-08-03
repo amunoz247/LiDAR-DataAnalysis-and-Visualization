@@ -1,3 +1,6 @@
+/* MQTT Socket Service Class.
+  Uses socketio library to connect to Flask backend
+  through websokcets to pull in data. */
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs/internal/Observable';

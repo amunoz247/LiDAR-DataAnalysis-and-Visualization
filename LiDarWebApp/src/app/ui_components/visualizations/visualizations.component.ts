@@ -1,3 +1,6 @@
+/* Visualization Dashboard Component.
+  Class to initialize bar chart and line graph and
+  pass in near real time data from the data service. */
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MqttSocketService } from '@app/mqtt/mqttsocket.service';
@@ -83,6 +86,7 @@ export class VisualizationsComponent implements OnInit {
 
   constructor(private ds : DataService, private ms : MqttSocketService, private bp: BreakpointObserver){
 
+    // Breakpoint variables to resize items in window
     bp.observe([
         Breakpoints.XSmall,
     ]).subscribe((result: any) => {
@@ -107,22 +111,13 @@ export class VisualizationsComponent implements OnInit {
         }
     });
 
-    // this.barData = [
-    //   {
-    //     "name": "Vehicles",
-    //     "series": this.initLineChart()
-    //   },
-    //   {
-    //     "name": "Pedestrians",
-    //     "series": this.initLineChart()
-    //   }
-    // ];
-
+    // Set Line Graph
     this.lineData = [{
       "name": "Objects",
       "series": this.initLineChart()
     }];
 
+    // Updates graphs every two seconds
     this.updateInterval = setInterval(() => this.addRealTimeData(), 2000);
   }
 
@@ -133,24 +128,17 @@ export class VisualizationsComponent implements OnInit {
     var app = this;
 
     this.ms.on('mqtt_message', function(value){
-        console.log(value);
-        //console.log(pcd);
-        // console.log(this);
-        // console.log(value.payload);
-        console.log(value.objects);
         const compressed = new Uint8Array(value.payload);
         const uncompressedPayload = fzstd.decompress(compressed);
-        console.log(uncompressedPayload);
         var string = new TextDecoder().decode(uncompressedPayload);
         console.log(string);
         this.parsedJSON = JSON.parse(string);
 
-        console.log(this.parsedJSON.y.length);
-        console.log(value.payload.length);
         if (app.pointCloud.length > 2){
           var val = app.pointCloud.shift();
           console.log(val);
         }
+
         console.log(app.pointCloud.length);
         app.pointCloud.push({time: value.time, topic: value.topic, x: this.parsedJSON.x, 
           y: this.parsedJSON.y, z: this.parsedJSON.z, intensity: this.parsedJSON.intensity, 
@@ -159,19 +147,23 @@ export class VisualizationsComponent implements OnInit {
     });
   }
 
+  // Allows for charts to be interactable
   onSelect(event) {
     console.log(event);
   }
 
+  // Resizes window in the event of a change
   onResize($event: Event) {
     this.setSize();
   }
 
+  // Sets size of the window using flex layout
   setSize() {
     this.elementStyle['height.px'] = this.flexLayoutContainerElement.nativeElement.offsetHeight;
     this.containerStyle['width.px'] = this.flexLayoutContainerElement.nativeElement.clientWidth;
   }
 
+  // Function to initialize line chart
   initLineChart() {
     const array = [];
     for (let i = 0; i < 100; i++) {
@@ -183,6 +175,7 @@ export class VisualizationsComponent implements OnInit {
     return array;
   }
 
+  // Function to add data to both charts
   addRealTimeData() {
     // Set Car and Pedestrian Counts
     this.carCount = 0;
