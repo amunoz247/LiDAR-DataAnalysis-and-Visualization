@@ -1,3 +1,4 @@
+/* Angular Routing Module */
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './ui_components/home/home.component';
@@ -6,6 +7,7 @@ import { VisualizationsComponent } from './ui_components/visualizations/visualiz
 import { SettingsComponent } from './ui_components/settings/settings.component';
 import { AboutComponent } from './ui_components/about/about.component';
 
+// Declare routes to each page in the application
 const routes: Routes = [
   {
     path: '',

@@ -1,3 +1,5 @@
+/* Additional module to import Angular material components.
+   This module is imported into main app.module.ts file */
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';

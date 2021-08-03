@@ -1,10 +1,13 @@
+/* Module that imports libraries and various created components into main Angular application */ 
+/* Angular Library Components */
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
-
-import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
+
+/* Added Libraries */
+import { AppRoutingModule } from './app-routing.module';
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
 import { MqttSocketService } from './mqtt/mqttsocket.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,6 +15,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+/* Created Components including UI and Renderer */
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './ui_components/header/header.component';
 import { FooterComponent } from './ui_components/footer/footer.component';
